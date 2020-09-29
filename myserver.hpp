@@ -7,7 +7,7 @@
 
 using namespace std;
 
-class MyServer : public webcc::View {
+class MyServer  {
    private:
     shared_ptr<webcc::Server> server;
 
