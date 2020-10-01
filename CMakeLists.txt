@@ -20,7 +20,7 @@ add_subdirectory(third_party/webcc)
 set(EXAMPLE_LIBS webcc)
 
 set(EXAMPLE_LIBS ${EXAMPLE_LIBS} ${CMAKE_DL_LIBS})
+link_directories(/usr/lib64/mysql)
 
-
-add_executable(hello_world_server hello_world_server.cpp)
+add_executable(hello_world_server main.cpp)
 target_link_libraries(hello_world_server ${EXAMPLE_LIBS})
