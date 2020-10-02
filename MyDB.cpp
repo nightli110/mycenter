@@ -83,3 +83,18 @@ bool MyDB::exeSQL(string sql)
     return true;
 
 }
+
+
+
+bool  MyDB::fetch_result(string sql, MYSQL_RES *result)
+{
+     if (mysql_query(mysql,sql.c_str()))
+    {
+        cout<<"Query Error: "<<mysql_error(mysql);
+        return false;
+    } else {
+        result = mysql_store_result(mysql);  
+        return true;
+    }
+    
+}
