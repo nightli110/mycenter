@@ -2,11 +2,11 @@
 
 project(hello_world_server)
 cmake_minimum_required(VERSION 3.18)
-
+set(CMAKE_BUILD_TYPE "Debug")
 
 set(Boost_USE_STATIC_LIBS ON)
 set(Boost_USE_MULTITHREADED ON)
-find_package(Boost 1.66.0 REQUIRED COMPONENTS system date_time filesystem)
+find_package(Boost 1.66.0 REQUIRED COMPONENTS system date_time filesystem thread)
 if(Boost_FOUND)
     message(STATUS "Boost version: ${Boost_VERSION}")
     include_directories(${Boost_INCLUDE_DIRS})

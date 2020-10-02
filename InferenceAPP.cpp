@@ -2,31 +2,6 @@
 
 using namespace std;
 
-inferenceAPP MysqlTOApp(MYSQL_RES *result)
-{
-    inferenceAPP myapp;
-    MYSQL_ROW row;
-
-    if (result)
-    {
-        int num_fields = mysql_num_fields(result);
-        int num_rows = mysql_num_rows(result);
-        for (int i = 0; i < num_rows; i++)
-        {
-            row = mysql_fetch_row(result);
-            if (row < 0)
-                break;
-
-            for (int j = 0; j < num_fields; j++) //输出每一字段
-            {
-                cout << row[j] << "\t\t";
-            }
-            cout << endl;
-        }
-    }
-    return myapp;
-}
-
 bool InferenceAPPMap::MysqlResToAppMap(MYSQL_RES *result)
 {
     if (result)
@@ -39,6 +14,10 @@ bool InferenceAPPMap::MysqlResToAppMap(MYSQL_RES *result)
         for (int i = 0; i < num_rows; i++)
         {
             row = mysql_fetch_row(result);
+            for (int j = 0; j < num_fields; j++) //输出每一字段
+            {
+                cout << row[j] << "\t\t";
+            }
             if (row < 0)
             {
                 cout << "no register inference app" << endl;
@@ -48,7 +27,7 @@ bool InferenceAPPMap::MysqlResToAppMap(MYSQL_RES *result)
             string name = MysqlRowToName(row);
 
             auto inferenceapp = MysqlRowToApp(row);
-            AppMap[name ] = inferenceapp;
+            AppMap[name] = inferenceapp;
         }
         return true;
     }
@@ -78,6 +57,7 @@ inferenceAPP InferenceAPPMap::MysqlRowToApp(MYSQL_ROW row)
 
 string InferenceAPPMap::MysqlRowToName(MYSQL_ROW row)
 {
-    return row[1];
+    string str(row[1]);
+    cout<<str<<endl;
+    return str;
 }
-
