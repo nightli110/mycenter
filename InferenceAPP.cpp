@@ -2,6 +2,59 @@
 
 using namespace std;
 
+Json::Value inferenceAPPToJson(const inferenceAPP myapp)
+{
+    Json::Value myjson;
+    myjson["id"] = myapp.id;
+    myjson["inference_name"] = myapp.inference_name;
+    myjson["model_name"] = myapp.model_name;
+    myjson["register_name"] = myapp.register_time;
+    myjson["ip"] = myapp.ip;
+    myjson["status"] = myapp.status;
+    myjson["inference_input"] = myapp.inference_input;
+    myjson["inference_output"] = myapp.inference_output;
+    myjson["model_status"] = myapp.model_status;
+    myjson["model_memery"] = myapp.model_memery;
+
+    return myjson;
+}
+
+inferenceAPP JsonToinferenceAPP(const Json::Value myjson)
+{
+    inferenceAPP myapp;
+    myapp.id = myjson["id"].asString();
+    myapp.inference_name = myjson["inference_name"].asString();
+    myapp.model_name = myjson["model_name"].asString();
+    myapp.register_time = myjson["register_time"].asString();
+    myapp.ip = myjson["ip"].asString();
+    myapp.status = myjson["status"].asInt();
+    myapp.inference_input = myjson["inference_input"].asString();
+    myapp.inference_output= myjson["inference_output"].asString();
+    myapp.model_status = myjson["model_status"].asInt();
+
+    return myapp;
+}
+
+string inferenceAPPToJsonString(const inferenceAPP& myapp)
+{
+
+    return JsonToString(inferenceAPPToJson(myapp));
+
+}
+
+bool JsonStringToinferenceAPP(const string& json_str, inferenceAPP* myapp)
+{
+    Json::Value json = StringToJson(json_str);
+    
+    if(!json)
+    {
+        return false;
+    }
+
+    *myapp = JsonToinferenceAPP(json);
+    return true;
+}
+
 bool InferenceAPPMap::MysqlResToAppMap(MYSQL_RES *result)
 {
     if (result)

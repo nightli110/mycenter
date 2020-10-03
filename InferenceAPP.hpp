@@ -4,6 +4,8 @@
 #include <boost/thread/shared_mutex.hpp>
 #include <mysql/mysql.h>
 
+#include "Common.hpp"
+
 using namespace std;
 
 struct inferenceAPP
@@ -22,6 +24,14 @@ struct inferenceAPP
 
 typedef boost::shared_lock<boost::shared_mutex> read_lock;
 typedef boost::unique_lock<boost::shared_mutex> write_lock;
+
+Json::Value inferenceAPPToJson(const inferenceAPP myapp);
+
+inferenceAPP JsonToinferenceAPP(const Json::Value myjson);
+
+string inferenceAPPToJsonString(const inferenceAPP& myapp);
+
+bool JsonStringToinferenceAPP(const string& json_str, inferenceAPP* myapp);
 
 class InferenceAPPMap
 {

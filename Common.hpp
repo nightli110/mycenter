@@ -1,10 +1,30 @@
-#include<iostream>
-#include<string>
+#include <iostream>
+#include <string>
+
+#include "json/json.h"
+
 using namespace std;
 
-enum inferencestatus{ registerd, online, offline,unregisterd };
+enum inferencestatus
+{
+    registerd,
+    online,
+    offline,
+    unregisterd
+};
 
+enum inferenceinput
+{
+    input_image,
+    input_text
+};
 
-enum inferenceinput{ image, text};
+enum inferenceoutput
+{
+    output_image,
+    output_text
+};
 
-enum inferenceoutput{image, text};
+string JsonToString(const Json::Value &json);
+
+Json::Value StringToJson(const std::string& str);

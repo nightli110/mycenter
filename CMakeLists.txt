@@ -12,20 +12,22 @@ if(Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})
 endif()
 
-set(EXAMPLE_LIBS webcc)
-
+set(WEBCC_LIBS webcc)
+set(JSON_LIBS jsoncpp)
 aux_source_directory(. CenterApp)
 
 include_directories(third_party)
 include_directories(${PROJECT_BINARY_DIR}/third_party)
+include_directories(third_party/jsoncpp)
 
 add_subdirectory(third_party/webcc)
+add_subdirectory(third_party/jsoncpp)
 link_directories(/usr/lib64/mysql)
 
 
-set(EXAMPLE_LIBS ${EXAMPLE_LIBS} ${CMAKE_DL_LIBS})
+set(CENTER_LIBS ${WEBCC_LIBS} ${CMAKE_DL_LIBS} ${JSON_LIBS})
 
 
 add_executable(hello_world_server ${CenterApp})
-target_link_libraries(hello_world_server ${EXAMPLE_LIBS})
+target_link_libraries(hello_world_server ${CENTER_LIBS})
 target_link_libraries(hello_world_server libmysqlclient.so)

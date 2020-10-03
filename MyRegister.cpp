@@ -16,11 +16,12 @@ webcc::ResponsePtr RegisterView::Handle(webcc::RequestPtr request)
     return {};
 }
 
-webcc::ResponsePtr  RegisterView::Post(webcc::RequestPtr request){
+webcc::ResponsePtr RegisterView::Post(webcc::RequestPtr request)
+{
+    
 
 }
 
-webcc::ResponsePtr  RegisterView::Get(webcc::RequestPtr request){
-
+webcc::ResponsePtr RegisterView::Get(webcc::RequestPtr request)
+{
 }
-

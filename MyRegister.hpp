@@ -5,12 +5,13 @@
 #include "webcc/response_builder.h"
 #include "webcc/server.h"
 
-class RegisterView : public webcc::View {
-    public:
-        webcc::ResponsePtr Handle(webcc::RequestPtr request) override;
-    
-    private:
-        webcc::ResponsePtr Get(webcc::RequestPtr request);
+class RegisterView : public webcc::View
+{
+public:
+    webcc::ResponsePtr Handle(webcc::RequestPtr request) override;
 
-        webcc::ResponsePtr Post(webcc::RequestPtr request);
+private:
+    webcc::ResponsePtr Get(webcc::RequestPtr request);
+
+    webcc::ResponsePtr Post(webcc::RequestPtr request);
 };
