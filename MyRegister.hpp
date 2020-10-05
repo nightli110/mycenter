@@ -1,9 +1,11 @@
 #include <iostream>
 #include <thread>
 
+#include "Globaldef.hpp"
 #include "webcc/logger.h"
 #include "webcc/response_builder.h"
 #include "webcc/server.h"
+
 
 class RegisterView : public webcc::View
 {

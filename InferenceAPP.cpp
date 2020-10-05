@@ -1,4 +1,4 @@
-#include "InferenceAPP.hpp"
+#include "Globaldef.hpp"
 
 using namespace std;
 
@@ -111,6 +111,21 @@ inferenceAPP InferenceAPPMap::MysqlRowToApp(MYSQL_ROW row)
 string InferenceAPPMap::MysqlRowToName(MYSQL_ROW row)
 {
     string str(row[1]);
-    cout<<str<<endl;
+   
     return str;
+}
+
+
+bool InferenceAPPMap::InferenceMapAdd(inferenceAPP myapp){
+    write_lock wlock(read_write_mutex);
+    if (AppMap.count(myapp.inference_name))
+    {
+        cout<<"app has registerd"<<endl; 
+    } else 
+    {
+        //TODO 写log 异常
+       AppMap[myapp.inference_name] = myapp;
+       cout<<"app add success"<<endl;
+    }
+    return true;
 }

@@ -18,10 +18,12 @@ webcc::ResponsePtr RegisterView::Handle(webcc::RequestPtr request)
 
 webcc::ResponsePtr RegisterView::Post(webcc::RequestPtr request)
 {
-    
+    inferenceAPP myapp;
+    if(JsonStringToinferenceAPP(request->data(), &myapp))
 
 }
 
 webcc::ResponsePtr RegisterView::Get(webcc::RequestPtr request)
 {
+
 }
