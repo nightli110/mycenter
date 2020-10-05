@@ -123,7 +123,7 @@ bool InferenceAPPMap::InferenceMapAdd(inferenceAPP myapp){
         cout<<"app has registerd"<<endl; 
     } else 
     {
-        //TODO 写log 异常
+        //TODO 写log 异常 写入数据库
        AppMap[myapp.inference_name] = myapp;
        cout<<"app add success"<<endl;
     }

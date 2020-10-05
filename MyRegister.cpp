@@ -19,11 +19,23 @@ webcc::ResponsePtr RegisterView::Handle(webcc::RequestPtr request)
 webcc::ResponsePtr RegisterView::Post(webcc::RequestPtr request)
 {
     inferenceAPP myapp;
-    if(JsonStringToinferenceAPP(request->data(), &myapp))
+    if (JsonStringToinferenceAPP(request->data(), &myapp))
+    {
+        auto suc = inferenceMap.InferenceMapAdd(myapp);
 
+        Json::Value json;
+
+        json["success"] = suc;
+        return webcc::ResponseBuilder{}.Created().Body(JsonToString(json)).Json().Utf8()();
+    }
+    else
+    {
+        return webcc::ResponseBuilder{}.BadRequest(){};
+    }
 }
 
 webcc::ResponsePtr RegisterView::Get(webcc::RequestPtr request)
 {
-
+    //TODO
+    if ()
 }

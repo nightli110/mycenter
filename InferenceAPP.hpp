@@ -46,6 +46,8 @@ public:
     
     map<string, inferenceAPP> GetInferenceMap();
 
+    bool InferenceToDB(inferenceAPP myapp);
+
 private:
     map<string, inferenceAPP> AppMap;
 
