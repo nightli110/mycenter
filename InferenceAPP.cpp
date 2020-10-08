@@ -53,6 +53,11 @@ bool JsonStringToinferenceAPP(const string &json_str, inferenceAPP *myapp)
     return true;
 }
 
+void InferenceAPPMap::InitDB(MyDB* mydb)
+{
+    registerdb = mydb;
+}
+
 bool InferenceAPPMap::MysqlResToAppMap(MYSQL_RES *result)
 {
     if (result)
@@ -131,14 +136,20 @@ bool InferenceAPPMap::InferenceMapAdd(inferenceAPP myapp)
 
 bool InferenceAPPMap::InferenceMapToDB(inferenceAPP myapp)
 {
-    // string sqlstr;
-    // sqlstr = "insert into app(inference_name, model_name, register_time, "\
-    // "ip, status, inference_input, inference_output, model_status, model_memery) values("+ 
-    // myapp.inference_name+", "+ myapp.model_name+", "+myapp.register_time+ ","+myapp.ip+
-    // ", "+ to_string(myapp.status) +", "+myapp.inference_input+ ", "+ myapp.inference_output+","+
-    // to_string(myapp.model_status)+ ", "+ to_string(myapp.model_memery)+")";
-    // bool DBsuccess = db.exeSQL(sqlstr);
-    bool  DBsuccess;
+    string sqlstr;
+    sqlstr = "insert into app(inference_name, model_name, register_time, "\
+    "ip, status, inference_input, inference_output, model_status, model_memery) values("+ 
+    myapp.inference_name+", "+ myapp.model_name+", "+myapp.register_time+ ","+myapp.ip+
+    ", "+ to_string(myapp.status) +", "+myapp.inference_input+ ", "+ myapp.inference_output+","+
+    to_string(myapp.model_status)+ ", "+ to_string(myapp.model_memery)+")";
+    cout<<sqlstr<<endl;
+    bool DBsuccess = registerdb->exeSQL(sqlstr);
+
     return DBsuccess;
 
+}
+
+MyDB* InferenceAPPMap::GetInferenceDB()
+{
+    return registerdb;
 }

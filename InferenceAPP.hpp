@@ -37,6 +37,8 @@ bool JsonStringToinferenceAPP(const string& json_str, inferenceAPP* myapp);
 class InferenceAPPMap
 {
 public:
+    void InitDB(MyDB* mydb);
+
     bool MysqlResToAppMap(MYSQL_RES *result);
 
     inferenceAPP MysqlRowToApp(MYSQL_ROW row);
@@ -48,8 +50,9 @@ public:
     bool InferenceMapToDB(inferenceAPP myapp);
 
     map<string, inferenceAPP> GetInferenceMap();
-
     
+    MyDB* GetInferenceDB();
+
 
 private:
     map<string, inferenceAPP> AppMap;

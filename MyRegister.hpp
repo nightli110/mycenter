@@ -10,6 +10,8 @@
 class RegisterView : public webcc::View
 {
 public:
+    //TODO webcc 改                                
+    RegisterView(InferenceAPPMap* mymap);
     webcc::ResponsePtr Handle(webcc::RequestPtr request) override;
 
 private:
