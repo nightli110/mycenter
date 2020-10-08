@@ -21,7 +21,7 @@ webcc::ResponsePtr RegisterView::Post(webcc::RequestPtr request)
     inferenceAPP myapp;
     if (JsonStringToinferenceAPP(request->data(), &myapp))
     {
-        auto suc = inferenceMap.InferenceMapAdd(myapp);
+        auto suc = appmap->InferenceMapAdd(myapp);
 
         Json::Value json;
 
@@ -30,12 +30,12 @@ webcc::ResponsePtr RegisterView::Post(webcc::RequestPtr request)
     }
     else
     {
-        return webcc::ResponseBuilder{}.BadRequest(){};
+        return webcc::ResponseBuilder{}.BadRequest()();
     }
 }
 
 webcc::ResponsePtr RegisterView::Get(webcc::RequestPtr request)
 {
     //TODO
-    if ()
+    return webcc::ResponseBuilder{}.BadRequest()();
 }

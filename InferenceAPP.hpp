@@ -5,6 +5,7 @@
 #include <mysql/mysql.h>
 
 #include "Common.hpp"
+#include "MyDB.hpp"
 
 using namespace std;
 
@@ -44,13 +45,16 @@ public:
 
     bool  InferenceMapAdd(inferenceAPP myapp);
     
+    bool InferenceMapToDB(inferenceAPP myapp);
+
     map<string, inferenceAPP> GetInferenceMap();
 
-    bool InferenceToDB(inferenceAPP myapp);
+    
 
 private:
     map<string, inferenceAPP> AppMap;
 
     boost::shared_mutex read_write_mutex;
     int Mapsize;
+    MyDB* registerdb;
 };

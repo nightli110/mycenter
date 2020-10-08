@@ -1,8 +1,5 @@
 #include <iostream>
-#include "MyDB.hpp"
 #include "InferenceAPP.hpp"
-#include "Globaldef.hpp"
-
 #include "json/json.h"
 using namespace std;
 

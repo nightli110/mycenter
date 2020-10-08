@@ -1,5 +1,4 @@
-#include "Globaldef.hpp"
-
+#include "InferenceAPP.hpp"
 using namespace std;
 
 Json::Value inferenceAPPToJson(const inferenceAPP myapp)
@@ -29,24 +28,23 @@ inferenceAPP JsonToinferenceAPP(const Json::Value myjson)
     myapp.ip = myjson["ip"].asString();
     myapp.status = myjson["status"].asInt();
     myapp.inference_input = myjson["inference_input"].asString();
-    myapp.inference_output= myjson["inference_output"].asString();
+    myapp.inference_output = myjson["inference_output"].asString();
     myapp.model_status = myjson["model_status"].asInt();
 
     return myapp;
 }
 
-string inferenceAPPToJsonString(const inferenceAPP& myapp)
+string inferenceAPPToJsonString(const inferenceAPP &myapp)
 {
 
     return JsonToString(inferenceAPPToJson(myapp));
-
 }
 
-bool JsonStringToinferenceAPP(const string& json_str, inferenceAPP* myapp)
+bool JsonStringToinferenceAPP(const string &json_str, inferenceAPP *myapp)
 {
     Json::Value json = StringToJson(json_str);
-    
-    if(!json)
+
+    if (!json)
     {
         return false;
     }
@@ -111,21 +109,36 @@ inferenceAPP InferenceAPPMap::MysqlRowToApp(MYSQL_ROW row)
 string InferenceAPPMap::MysqlRowToName(MYSQL_ROW row)
 {
     string str(row[1]);
-   
+
     return str;
 }
 
-
-bool InferenceAPPMap::InferenceMapAdd(inferenceAPP myapp){
+bool InferenceAPPMap::InferenceMapAdd(inferenceAPP myapp)
+{
     write_lock wlock(read_write_mutex);
     if (AppMap.count(myapp.inference_name))
     {
-        cout<<"app has registerd"<<endl; 
-    } else 
+        cout << "app has registerd" << endl;
+    }
+    else
     {
-        //TODO 写log 异常 写入数据库
-       AppMap[myapp.inference_name] = myapp;
-       cout<<"app add success"<<endl;
+        //TODO 写log 异常  异步写入数据库
+        AppMap[myapp.inference_name] = myapp;
+        cout << "app add success" << endl;
     }
     return true;
+}
+
+bool InferenceAPPMap::InferenceMapToDB(inferenceAPP myapp)
+{
+    // string sqlstr;
+    // sqlstr = "insert into app(inference_name, model_name, register_time, "\
+    // "ip, status, inference_input, inference_output, model_status, model_memery) values("+ 
+    // myapp.inference_name+", "+ myapp.model_name+", "+myapp.register_time+ ","+myapp.ip+
+    // ", "+ to_string(myapp.status) +", "+myapp.inference_input+ ", "+ myapp.inference_output+","+
+    // to_string(myapp.model_status)+ ", "+ to_string(myapp.model_memery)+")";
+    // bool DBsuccess = db.exeSQL(sqlstr);
+    bool  DBsuccess;
+    return DBsuccess;
+
 }
