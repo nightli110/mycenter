@@ -17,7 +17,7 @@ webcc::ResponsePtr RegisterView::Handle(webcc::RequestPtr request)
     }
     if (request->method() == "POST")
     {
-        cout<<"hello"<<endl;
+        cout<<"hello"<<endl;   
         return Post(request);
     }
     return {};

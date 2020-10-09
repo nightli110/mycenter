@@ -1,38 +1,23 @@
-#include <iostream>
-// #include "InferenceAPP.hpp"
-#include "MyRegister.hpp"
-#include "json/json.h"
+#include "client_http.hpp"
+#include "server_http.hpp"
+#include <future>
+
+
+#define BOOST_SPIRIT_THREADSAFE
+#include <boost/property_tree/json_parser.hpp>
+#include <boost/property_tree/ptree.hpp>
+
+#include <algorithm>
+#include <boost/filesystem.hpp>
+#include <fstream>
+#include <vector>
+#ifdef HAVE_OPENSSL
+#include "crypto.hpp"
+#endif
+
 using namespace std;
+// Added for the json-example:
+using namespace boost::property_tree;
 
-
-void runserver(InferenceAPPMap *myapp) {
-    webcc::Server server{boost::asio::ip::tcp::v4(), 8080};
-
-    auto view = std::make_shared<RegisterView>(myapp);
-    server.Route("/", view);
-    server.Route("/hello", view);
-    server.Run(1);
-}
-
-int main()
-{
-    WEBCC_LOG_INIT("", webcc::LOG_CONSOLE);
-    LOG_USER("Workers: %d", 1);
-    LOG_USER("Sleep seconds: %d", 1);
-    MyDB db;
-    InferenceAPPMap mytest;
-    MYSQL_RES *result;
-    db.initDB("localhost", "root", "123456", "application");
-
-    mytest.InitDB(&db);
-    // mytest.GetInferenceDB()->fetch_result("SELECT * from app;");
-    // mytest.MysqlResToAppMap(db.getmysqlresult());
-
-    runserver(&mytest);
-    // while (1) {
-    //     cout << "1" << endl;
-    //     sleep(1);
-    // }
-    cout << "1" << endl;
-    return 0;
-}
+using HttpServer = SimpleWeb::Server<SimpleWeb::HTTP>;
+using HttpClient = SimpleWeb::Client<SimpleWeb::HTTP>;
