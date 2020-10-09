@@ -13,7 +13,6 @@ if(Boost_FOUND)
 endif()
 
 
-set(WEBCC_LIBS webcc)
 set(JSON_LIBS jsoncpp)
 set(SIMPLE_HTTP_LIBS simple-web-server )
 aux_source_directory(. CenterApp)
@@ -23,13 +22,12 @@ include_directories(${PROJECT_BINARY_DIR}/third_party)
 include_directories(third_party/jsoncpp)
 include_directories(third_party/simplehttp)
 
-add_subdirectory(third_party/webcc)
 add_subdirectory(third_party/jsoncpp)
 add_subdirectory(third_party/simplehttp)
 link_directories(/usr/lib64/mysql)
 
 
-set(CENTER_LIBS ${WEBCC_LIBS} ${CMAKE_DL_LIBS} ${JSON_LIBS} ${SIMPLE_HTTP_LIBS} ${Boost_LIBRARIES})
+set(CENTER_LIBS ${CMAKE_DL_LIBS} ${JSON_LIBS} ${SIMPLE_HTTP_LIBS} ${Boost_LIBRARIES})
 
 
 add_executable(hello_world_server ${CenterApp})
