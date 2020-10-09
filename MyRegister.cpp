@@ -9,43 +9,35 @@ RegisterView::RegisterView(InferenceAPPMap* mymap)
     appmap = mymap;
 }
 
-webcc::ResponsePtr RegisterView::Handle(webcc::RequestPtr request)
-{
-    if (request->method() == "GET")
-    {
-        return Get(request);
-    }
-    if (request->method() == "POST")
-    {
-        cout<<"hello"<<endl;   
-        return Post(request);
-    }
-    return {};
-}
 
-webcc::ResponsePtr RegisterView::Post(webcc::RequestPtr request)
+
+string RegisterView::Post(string requestjson)
 {
     inferenceAPP myapp;
      cout<<"hello"<<endl;
-    if (JsonStringToinferenceAPP(request->data(), &myapp))
+    if (JsonStringToinferenceAPP(requestjson, &myapp))
     {
         auto suc = appmap->InferenceMapAdd(myapp);
-        cout<<"hello"<<endl;
         Json::Value json;
 
-        json["success"] = "hhhhhhhh";
-        return webcc::ResponseBuilder{}.Created().Body(JsonToString(json)).Json().Utf8()();
+        json["success"] = suc;
+        auto reponsejson = JsonToString(json);
+        return reponsejson;
     }
     else
     {
-        return webcc::ResponseBuilder{}.BadRequest()();
+        Json::Value json;
+
+        json["success"] = "failed";
+        auto reponsejson = JsonToString(json);
+        return reponsejson;
     }
 }
 
-webcc::ResponsePtr RegisterView::Get(webcc::RequestPtr request)
+string RegisterView::Get(string request)
 {
     //TODO
     cout<<"hello world"<<endl;
-    return webcc::ResponseBuilder{}.BadRequest()();
+    return string("TODO");
 }
 

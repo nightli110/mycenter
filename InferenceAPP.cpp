@@ -30,6 +30,7 @@ inferenceAPP JsonToinferenceAPP(const Json::Value myjson)
     myapp.inference_input = myjson["inference_input"].asString();
     myapp.inference_output = myjson["inference_output"].asString();
     myapp.model_status = myjson["model_status"].asInt();
+    myapp.model_memery = myjson["model_memery"].asDouble();
 
     return myapp;
 }
@@ -129,6 +130,7 @@ bool InferenceAPPMap::InferenceMapAdd(inferenceAPP myapp)
     {
         //TODO 写log 异常  异步写入数据库
         AppMap[myapp.inference_name] = myapp;
+        InferenceMapToDB(myapp);
         cout << "app add success" << endl;
     }
     return true;
@@ -138,11 +140,12 @@ bool InferenceAPPMap::InferenceMapToDB(inferenceAPP myapp)
 {
     string sqlstr;
     sqlstr = "insert into app(inference_name, model_name, register_time, "\
-    "ip, status, inference_input, inference_output, model_status, model_memery) values("+ 
-    myapp.inference_name+", "+ myapp.model_name+", "+myapp.register_time+ ","+myapp.ip+
-    ", "+ to_string(myapp.status) +", "+myapp.inference_input+ ", "+ myapp.inference_output+","+
-    to_string(myapp.model_status)+ ", "+ to_string(myapp.model_memery)+")";
+    "ip, status, inference_input, inference_output, model_status, model_memery) values(\""+ 
+    myapp.inference_name+"\", \""+ myapp.model_name+"\", \""+myapp.register_time+ "\",\""+myapp.ip+
+    "\", \""+ to_string(myapp.status) +"\", \""+myapp.inference_input+ "\", \""+ myapp.inference_output+"\", \""+
+    to_string(myapp.model_status)+ "\", \""+ to_string(myapp.model_memery)+"\")";
     cout<<sqlstr<<endl;
+
     bool DBsuccess = registerdb->exeSQL(sqlstr);
 
     return DBsuccess;
