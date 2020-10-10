@@ -26,7 +26,7 @@ inferenceAPP JsonToinferenceAPP(const Json::Value myjson)
     myapp.model_name = myjson["model_name"].asString();
     myapp.register_time = myjson["register_time"].asString();
     myapp.ip = myjson["ip"].asString();
-    myapp.status = myjson["status"].asInt();
+    myapp.status = 0;
     myapp.inference_input = myjson["inference_input"].asString();
     myapp.inference_output = myjson["inference_output"].asString();
     myapp.model_status = myjson["model_status"].asInt();
@@ -54,7 +54,7 @@ bool JsonStringToinferenceAPP(const string &json_str, inferenceAPP *myapp)
     return true;
 }
 
-void InferenceAPPMap::InitDB(MyDB* mydb)
+void InferenceAPPMap::InitDB(MyDB *mydb)
 {
     registerdb = mydb;
 }
@@ -125,6 +125,7 @@ bool InferenceAPPMap::InferenceMapAdd(inferenceAPP myapp)
     if (AppMap.count(myapp.inference_name))
     {
         cout << "app has registerd" << endl;
+        return false;
     }
     else
     {
@@ -136,23 +137,44 @@ bool InferenceAPPMap::InferenceMapAdd(inferenceAPP myapp)
     return true;
 }
 
+bool InferenceAPPMap::InferenceMapRemove(inferenceApp myapp)
+{
+    write_lock wlock(read_write_mutex);
+    if (AppMap.count(myapp.inference_name))
+    {
+        AppMap.erase(myapp.inference_name);
+        return true;
+    }
+    else
+    {
+        count << "app not register" << endl;
+        return false;
+    }
+}
+
 bool InferenceAPPMap::InferenceMapToDB(inferenceAPP myapp)
 {
     string sqlstr;
-    sqlstr = "insert into app(inference_name, model_name, register_time, "\
-    "ip, status, inference_input, inference_output, model_status, model_memery) values(\""+ 
-    myapp.inference_name+"\", \""+ myapp.model_name+"\", \""+myapp.register_time+ "\",\""+myapp.ip+
-    "\", \""+ to_string(myapp.status) +"\", \""+myapp.inference_input+ "\", \""+ myapp.inference_output+"\", \""+
-    to_string(myapp.model_status)+ "\", \""+ to_string(myapp.model_memery)+"\")";
-    cout<<sqlstr<<endl;
+    if (myapp.status == 0)
+    {
+        sqlstr = "insert into app(inference_name, model_name, register_time, "
+                 "ip, status, inference_input, inference_output, model_status, model_memery) values(\"" +
+                 myapp.inference_name + "\", \"" + myapp.model_name + "\", \"" + myapp.register_time + "\",\"" + myapp.ip +
+                 "\", \"" + to_string(myapp.status) + "\", \"" + myapp.inference_input + "\", \"" + myapp.inference_output + "\", \"" +
+                 to_string(myapp.model_status) + "\", \"" + to_string(myapp.model_memery) + "\")";
+        cout << sqlstr << endl;
+    } else if (myapp.status == 1)
+    {
+        sqlstr = "delete from app where inference_name =  \"" + myapp.inference_name  +"\")";
+        cout<<sqlstr<<endl;
+    }
 
     bool DBsuccess = registerdb->exeSQL(sqlstr);
 
     return DBsuccess;
-
 }
 
-MyDB* InferenceAPPMap::GetInferenceDB()
+MyDB *InferenceAPPMap::GetInferenceDB()
 {
     return registerdb;
 }

@@ -11,10 +11,10 @@ RegisterView::RegisterView(InferenceAPPMap* mymap)
 
 
 
-string RegisterView::Post(string requestjson)
+string RegisterView::AppRegister(string requestjson)
 {
     inferenceAPP myapp;
-     cout<<"hello"<<endl;
+     cout<<"register"<<endl;
     if (JsonStringToinferenceAPP(requestjson, &myapp))
     {
         auto suc = appmap->InferenceMapAdd(myapp);
@@ -28,6 +28,23 @@ string RegisterView::Post(string requestjson)
     {
         Json::Value json;
 
+        json["success"] = "failed";
+        auto reponsejson = JsonToString(json);
+        return reponsejson;
+    }
+}
+
+string RegisterView::AppUnRegister(string requestjson)
+{
+    inferenceAPP myapp;
+    cout<<"unregister"<<endl;
+    if (JsonStringToinferenceAPP(requestjson, &myapp))
+    {
+        
+    }
+    else
+    {
+        Json::Value json;
         json["success"] = "failed";
         auto reponsejson = JsonToString(json);
         return reponsejson;

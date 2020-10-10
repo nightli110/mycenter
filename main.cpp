@@ -14,7 +14,6 @@
 #include "crypto.hpp"
 #endif
 
-
 #include "MyRegister.hpp"
 using namespace std;
 // Added for the json-example:
@@ -50,7 +49,19 @@ int main()
                       << e.what();
         }
     };
-    server.resource["^/info$"]["GET"] = [](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request) {
+
+    server.resource["^/inference/unregister"]["POST"] = [](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request){
+
+    }
+    server.resource["^/inference/online"]["POST"] = [Registerapp](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request) {
+          
+    };
+
+    server.resource["^/inference/offline"]["POST"] = [](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request){
+
+    };
+
+    server.resource[] server.resource["^/info$"]["GET"] = [](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request) {
         cout << "1111" << endl;
         response->write(request->path_match[1].str());
     };

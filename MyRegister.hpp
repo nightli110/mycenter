@@ -12,7 +12,8 @@ public:
     RegisterView(InferenceAPPMap* mymap);
     string Get(string request);
 
-    string Post(string requestjson);
+    string AppRegister(string requestjson);
+    string AppUnRegister(string requestjson);
 
 private:
     

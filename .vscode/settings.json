@@ -5,6 +5,9 @@
         "ostream": "cpp",
         "iostream": "cpp",
         "thread": "cpp",
-        "*.old": "cpp"
+        "*.old": "cpp",
+        "bitset": "cpp",
+        "chrono": "cpp",
+        "algorithm": "cpp"
     }
 }

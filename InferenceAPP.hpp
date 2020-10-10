@@ -46,6 +46,8 @@ public:
     string MysqlRowToName(MYSQL_ROW row);
 
     bool  InferenceMapAdd(inferenceAPP myapp);
+
+    bool InferenceMapRemove(inferenceAPP myapp);
     
     bool InferenceMapToDB(inferenceAPP myapp);
 
