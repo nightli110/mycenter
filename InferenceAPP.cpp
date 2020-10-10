@@ -140,7 +140,7 @@ bool InferenceAPPMap::InferenceMapAdd(inferenceAPP myapp)
 bool InferenceAPPMap::InferenceMapRemove(inferenceApp myapp)
 {
     write_lock wlock(read_write_mutex);
-    if (AppMap.count(myapp.inference_name))
+    if (AppMap.count(myapp.inference_name)&& myapp.status ==1)
     {
         AppMap.erase(myapp.inference_name);
         return true;
@@ -148,6 +148,30 @@ bool InferenceAPPMap::InferenceMapRemove(inferenceApp myapp)
     else
     {
         count << "app not register" << endl;
+        return false;
+    }
+}
+
+bool InfereceAPPMap::InferenceMapUpdate(inferenceAPP myapp)
+{
+    write_lock wlock(read_write_mutex);
+    if (AppMap.count(myapp.inference_name))
+    {
+        if (AppMap[myapp.inference_name] .status != myapp.status)
+        {
+            AppMap[myapp.inference_name] .status = myapp.status;
+            cout<<"inferencestatus update"<<endl;
+            return true;
+        }
+        else
+        {
+            cout<<"status sample"<<endl;
+            return false;
+        }
+    }
+    else 
+    {
+        cout<<"app not register "<<endl;
         return false;
     }
 }
@@ -161,11 +185,17 @@ bool InferenceAPPMap::InferenceMapToDB(inferenceAPP myapp)
                  "ip, status, inference_input, inference_output, model_status, model_memery) values(\"" +
                  myapp.inference_name + "\", \"" + myapp.model_name + "\", \"" + myapp.register_time + "\",\"" + myapp.ip +
                  "\", \"" + to_string(myapp.status) + "\", \"" + myapp.inference_input + "\", \"" + myapp.inference_output + "\", \"" +
-                 to_string(myapp.model_status) + "\", \"" + to_string(myapp.model_memery) + "\")";
+                 to_string(myapp.model_status) + "\", \"" + to_string(myapp.model_memery) + "\");";
         cout << sqlstr << endl;
-    } else if (myapp.status == 1)
+    }
+    else if (myapp.status == 1)
     {
-        sqlstr = "delete from app where inference_name =  \"" + myapp.inference_name  +"\")";
+        sqlstr = "delete from app where inference_name =  \"" + myapp.inference_name + "\");";
+        cout << sqlstr << endl;
+    }
+    else if (myapp.status==2 || myapp.status==3)
+    {
+        sqlstr = "update  app set status = " + to_string(myapp.status) + "where inference_name =  \""+ myapp.inference_name +"\");";
         cout<<sqlstr<<endl;
     }
 
@@ -173,6 +203,7 @@ bool InferenceAPPMap::InferenceMapToDB(inferenceAPP myapp)
 
     return DBsuccess;
 }
+
 
 MyDB *InferenceAPPMap::GetInferenceDB()
 {

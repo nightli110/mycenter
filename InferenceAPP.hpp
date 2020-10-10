@@ -49,6 +49,8 @@ public:
 
     bool InferenceMapRemove(inferenceAPP myapp);
     
+    bool InferenceMapUpdate(inferenceAPP myapp);
+    
     bool InferenceMapToDB(inferenceAPP myapp);
 
     map<string, inferenceAPP> GetInferenceMap();

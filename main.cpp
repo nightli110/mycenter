@@ -14,7 +14,7 @@
 #include "crypto.hpp"
 #endif
 
-#include "MyRegister.hpp"
+#include "MyAPPAction.hpp"
 using namespace std;
 // Added for the json-example:
 using namespace boost::property_tree;
@@ -33,15 +33,15 @@ int main()
     db.initDB("localhost", "root", "123456", "application");
 
     mytest.InitDB(&db);
-    shared_ptr<RegisterView> Registerapp = make_shared<RegisterView>(&mytest);
-    server.resource["^/inference/register"]["POST"] = [Registerapp](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request) {
+    shared_ptr<MyAPPActionView> AppActionView = make_shared<MyAPPActionView>(&mytest);
+    server.resource["^/inference/register"]["POST"] = [AppActionView](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request) {
         try
         {
             string request_str = request->content.string();
 
-            string response_str = Registerapp->Post(request_str);
+            string response_str = AppActionView->InferenceMapAdd(request_str);
 
-            response->write(request_str);
+            response->write(response_str);
         }
         catch (const exception &e)
         {
@@ -50,18 +50,28 @@ int main()
         }
     };
 
-    server.resource["^/inference/unregister"]["POST"] = [](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request){
+    server.resource["^/inference/unregister"]["POST"] = [AppActionView](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request) {
+        try
+        {
+            /* code */
+            string request_str = request->contet.string();
+            string resonse_str = AppActionView->AppUnRegister()
+                                     response->write(resonse_str);
+        }
+        catch (const std::exception &e)
+        {
+            *response << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << strlen(e.what()) << "\r\n\r\n"
+                      << e.what();
+        }
+    } server.resource["^/inference/online"]["POST"] = [AppActionView](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request) {
 
-    }
-    server.resource["^/inference/online"]["POST"] = [Registerapp](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request) {
-          
     };
 
-    server.resource["^/inference/offline"]["POST"] = [](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request){
+    server.resource["^/inference/offline"]["POST"] = [AppActionView](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request) {
 
     };
 
-    server.resource[] server.resource["^/info$"]["GET"] = [](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request) {
+    server.resource[] server.resource["^/info$"]["GET"] = [AppActionView](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request) {
         cout << "1111" << endl;
         response->write(request->path_match[1].str());
     };
