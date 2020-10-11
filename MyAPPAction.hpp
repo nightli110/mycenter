@@ -9,7 +9,7 @@ class MyAPPActionView
 {
 public:
     MyAPPActionView(InferenceAPPMap *mymap);
-    string Get(string request);
+    string GetMap();
 
     string AppRegister(string requestjson);
     string AppUnRegister(string requestjson);

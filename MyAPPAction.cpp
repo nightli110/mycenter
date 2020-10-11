@@ -36,7 +36,7 @@ string MyAPPActionView::AppUnRegister(string requestjson)
     if (JsonStringToinferenceAPP(requestjson, &myapp))
     {
         Json::Value json;
-        auto suc = InferenceMapRemove(myapp);
+        auto suc =appmap->InferenceMapRemove(myapp);
         
         json["success"] = suc;
         auto reponsejson = JsonToString(json);
@@ -58,7 +58,7 @@ string  MyAPPActionView::AppOnline(string requestjson)
     if (JsonStringToinferenceAPP(requestjson, &myapp))
     {
         Json::Value json;
-        auto suc = InferenceMapUpdate(myapp);
+        auto suc = appmap->InferenceMapUpdate(myapp);
         
         json["success"] = suc;
         auto reponsejson = JsonToString(json);
@@ -81,7 +81,7 @@ string MyAPPActionView::AppOffLine(string requestjson)
     if (JsonStringToinferenceAPP(requestjson, &myapp))
     {
         Json::Value json;
-        auto suc = InferenceMapUpdate(myapp);
+        auto suc = appmap->InferenceMapUpdate(myapp);
         
         json["success"] = suc;
         auto reponsejson = JsonToString(json);
@@ -95,9 +95,18 @@ string MyAPPActionView::AppOffLine(string requestjson)
         return reponsejson;
     }
 }
-string MyAPPActionView::Get(string request)
+
+string MyAPPActionView::GetMap()
 {
-    //TODO
-    cout << "hello world" << endl;
-    return string("TODO");
+    auto appinfor = appmap->GetInferenceMap();
+    string response_str  = "";
+    for (auto iter = appinfor.begin(); iter != appinfor.end(); iter++)
+    {
+        string name = iter->first;
+        string info = inferenceAPPToJsonString(iter->second);
+        response_str = response_str +  name + ": "+ info +"; ";
+    } 
+
+    cout << "GetMap" << endl;
+    return response_str;
 }

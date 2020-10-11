@@ -39,7 +39,7 @@ int main()
         {
             string request_str = request->content.string();
 
-            string response_str = AppActionView->InferenceMapAdd(request_str);
+            string response_str = AppActionView->AppRegister(request_str);
 
             response->write(response_str);
         }
@@ -54,25 +54,58 @@ int main()
         try
         {
             /* code */
-            string request_str = request->contet.string();
-            string resonse_str = AppActionView->AppUnRegister()
-                                     response->write(resonse_str);
+            string request_str = request->content.string();
+            string response_str = AppActionView->AppUnRegister(request_str);
+            response->write(response_str);
         }
         catch (const std::exception &e)
         {
             *response << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << strlen(e.what()) << "\r\n\r\n"
                       << e.what();
         }
-    } server.resource["^/inference/online"]["POST"] = [AppActionView](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request) {
+    } ;
 
+    server.resource["^/inference/online"]["POST"] = [AppActionView](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request) {
+        try
+        {
+            /* code */
+            string request_str = request->content.string();
+            string response_str = AppActionView->AppOnline(request_str);
+            response->write(response_str);
+        }
+        catch (const std::exception &e)
+        {
+            *response << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << strlen(e.what()) << "\r\n\r\n"
+                      << e.what();
+        }
     };
 
     server.resource["^/inference/offline"]["POST"] = [AppActionView](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request) {
-
+        try
+        {
+            /* code */
+            string request_str = request->content.string();
+            string response_str = AppActionView->AppOffLine(request_str);
+            response->write(response_str);
+        }
+        catch (const std::exception &e)
+        {
+            *response << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << strlen(e.what()) << "\r\n\r\n"
+                      << e.what();
+        }
     };
 
-    server.resource[] server.resource["^/info$"]["GET"] = [AppActionView](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request) {
-        cout << "1111" << endl;
+    server.resource["^/infomap"]["GET"] = [AppActionView](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request) {
+        try
+        {
+                string response_str = AppActionView->GetMap();
+                response->write(response_str);
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << '\n';
+        }
+        
         response->write(request->path_match[1].str());
     };
 

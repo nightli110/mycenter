@@ -137,7 +137,7 @@ bool InferenceAPPMap::InferenceMapAdd(inferenceAPP myapp)
     return true;
 }
 
-bool InferenceAPPMap::InferenceMapRemove(inferenceApp myapp)
+bool InferenceAPPMap::InferenceMapRemove(inferenceAPP myapp)
 {
     write_lock wlock(read_write_mutex);
     if (AppMap.count(myapp.inference_name)&& myapp.status ==1)
@@ -147,12 +147,12 @@ bool InferenceAPPMap::InferenceMapRemove(inferenceApp myapp)
     }
     else
     {
-        count << "app not register" << endl;
+        cout << "app not register" << endl;
         return false;
     }
 }
 
-bool InfereceAPPMap::InferenceMapUpdate(inferenceAPP myapp)
+bool InferenceAPPMap::InferenceMapUpdate(inferenceAPP myapp)
 {
     write_lock wlock(read_write_mutex);
     if (AppMap.count(myapp.inference_name))
@@ -204,6 +204,10 @@ bool InferenceAPPMap::InferenceMapToDB(inferenceAPP myapp)
     return DBsuccess;
 }
 
+const map<string, inferenceAPP> InferenceAPPMap::GetInferenceMap()
+{
+    return AppMap;
+}
 
 MyDB *InferenceAPPMap::GetInferenceDB()
 {

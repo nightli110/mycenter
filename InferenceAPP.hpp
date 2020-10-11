@@ -53,7 +53,7 @@ public:
     
     bool InferenceMapToDB(inferenceAPP myapp);
 
-    map<string, inferenceAPP> GetInferenceMap();
+    const map<string, inferenceAPP> GetInferenceMap();
     
     MyDB* GetInferenceDB();
 
