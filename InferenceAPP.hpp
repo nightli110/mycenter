@@ -11,16 +11,16 @@ using namespace std;
 
 struct inferenceAPP
 {
-    string id;
-    string inference_name;
-    string model_name;
-    string register_time;
-    string ip;
-    int status;
-    string inference_input;
-    string inference_output;
-    int model_status;
-    double model_memery;
+    string id;                                          //id 自增
+    string inference_name;            //应用名字，暂时唯一
+    string model_name;                  //模型名字
+    string register_time;                  //注册时间
+    string ip;                                          //ip+port
+    int status;                                        //状态，0注册成功，1解除注册数据库中移除，2上线，3下线
+    string inference_input;             //模型输入支持image，text，e.g. {image:1;text:1}
+    string inference_output;          //模型输出支持image，text，e.g. {image:1;text:1}
+    int model_status;                         //模型状态，0：V-RAM，1：RAM，2：ROM
+    double model_memery;           //模型占有RAM资源 
 };
 
 typedef boost::shared_lock<boost::shared_mutex> read_lock;
