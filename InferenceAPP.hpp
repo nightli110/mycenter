@@ -1,8 +1,8 @@
-/*
+/*** 
  * @Author: nightli
  * @Date: 2020-09-29 15:44:29
  * @LastEditors: nightli
- * @LastEditTime: 2020-10-12 17:03:38
+ * @LastEditTime: 2020-10-12 23:36:34
  * @FilePath: /mycenter/InferenceAPP.hpp
  * @Emile: 1658484908@qq.com
  */
@@ -30,9 +30,6 @@ struct inferenceAPP
     int model_status;        //模型状态，0：V-RAM，1：RAM，2：ROM
     double model_memery;     //模型占有RAM资源
 };
-
-typedef boost::shared_lock<boost::shared_mutex> read_lock;
-typedef boost::unique_lock<boost::shared_mutex> write_lock;
 
 Json::Value inferenceAPPToJson(const inferenceAPP myapp);
 
