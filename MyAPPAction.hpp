@@ -1,3 +1,11 @@
+/*
+ * @Author: nightli
+ * @Date: 2020-09-28 22:37:46
+ * @LastEditors: nightli
+ * @LastEditTime: 2020-10-12 17:03:04
+ * @FilePath: /mycenter/MyAPPAction.hpp
+ * @Emile: 1658484908@qq.com
+ */
 #include <iostream>
 #include <thread>
 
@@ -15,6 +23,7 @@ public:
     string AppUnRegister(string requestjson);
     string AppOnline(string requestjson);
     string AppOffLine(string requestjson);
+
 
 private:
     InferenceAPPMap *appmap;

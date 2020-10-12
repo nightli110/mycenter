@@ -1,3 +1,11 @@
+/***
+ * @Author: nightli
+ * @Date: 2020-09-29 16:18:10
+ * @LastEditors: nightli
+ * @LastEditTime: 2020-10-12 17:08:38
+ * @FilePath: /mycenter/main.cpp
+ * @Emile: 1658484908@qq.com
+ */
 #include "client_http.hpp"
 #include "server_http.hpp"
 #include <future>
@@ -16,7 +24,7 @@
 
 #include "MyAPPAction.hpp"
 using namespace std;
-// Added for the json-example:
+
 using namespace boost::property_tree;
 
 using HttpServer = SimpleWeb::Server<SimpleWeb::HTTP>;
@@ -24,6 +32,7 @@ using HttpClient = SimpleWeb::Client<SimpleWeb::HTTP>;
 
 int main()
 {
+    PrintMonster();
     HttpServer server;
     server.config.port = 8080;
 
@@ -63,7 +72,7 @@ int main()
             *response << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << strlen(e.what()) << "\r\n\r\n"
                       << e.what();
         }
-    } ;
+    };
 
     server.resource["^/inference/online"]["POST"] = [AppActionView](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request) {
         try
@@ -98,14 +107,14 @@ int main()
     server.resource["^/infomap"]["GET"] = [AppActionView](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request) {
         try
         {
-                string response_str = AppActionView->GetMap();
-                response->write(response_str);
+            string response_str = AppActionView->GetMap();
+            response->write(response_str);
         }
-        catch(const std::exception& e)
+        catch (const std::exception &e)
         {
             std::cerr << e.what() << '\n';
         }
-        
+
         response->write(request->path_match[1].str());
     };
 

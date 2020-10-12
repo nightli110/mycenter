@@ -1,3 +1,11 @@
+/*** 
+ * @Author: nightli
+ * @Date: 2020-09-29 16:17:56
+ * @LastEditors: nightli
+ * @LastEditTime: 2020-10-12 17:16:22
+ * @FilePath: /mycenter/Common.hpp
+ * @Emile: 1658484908@qq.com
+ */
 #include <iostream>
 #include <string>
 
@@ -28,3 +36,5 @@ enum inferenceoutput
 string JsonToString(const Json::Value &json);
 
 Json::Value StringToJson(const std::string& str);
+
+void PrintMonster();
