@@ -4,7 +4,8 @@ MyImageTool 中心控制模块
 目前是一个http 服务器，基于simple-web-server框架+mysql开发  
 
 
-目前主要实现推理实例的注册，解除注册，上线，下线，MyCenter具有一定 的服务治理功能 
+
+目前主要实现推理实例的注册，解除注册，上线，下线，MyCenter具有一定 的服务治理功能   
 推理应用
 ```
 struct inferenceAPP
@@ -22,3 +23,12 @@ struct inferenceAPP
 };
 ```
 
+## 目前编译方式
+依赖库boost
+```
+mkdir build
+cd build
+cmake ..
+make -j8
+./hello_world_sever
+```

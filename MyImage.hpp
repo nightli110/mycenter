@@ -2,7 +2,7 @@
  * @Author: nightli
  * @Date: 2020-10-11 15:41:44
  * @LastEditors: nightli
- * @LastEditTime: 2020-10-12 19:58:10
+ * @LastEditTime: 2020-10-13 22:07:12
  * @FilePath: /mycenter/MyImage.hpp
  * @Emile: 1658484908@qq.com
  */
@@ -30,4 +30,4 @@ private:
     string ImagePath;
     int Height;
     int Width;
-}
+};

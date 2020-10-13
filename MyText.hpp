@@ -2,7 +2,7 @@
  * @Author: nightli
  * @Date: 2020-10-12 20:05:38
  * @LastEditors: nightli
- * @LastEditTime: 2020-10-13 11:38:40
+ * @LastEditTime: 2020-10-13 22:07:02
  * @FilePath: /mycenter/MyText.hpp
  * @Emile: 1658484908@qq.com
  */
@@ -29,4 +29,4 @@ private:
     string MyText;
 
     string TextId;
-}
+};

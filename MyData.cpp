@@ -2,7 +2,7 @@
  * @Author: nightli
  * @Date: 2020-10-12 23:20:02
  * @LastEditors: nightli
- * @LastEditTime: 2020-10-13 17:09:21
+ * @LastEditTime: 2020-10-13 22:20:52
  * @FilePath: /mycenter/MyData.cpp
  * @Emile: 1658484908@qq.com
  */
@@ -12,142 +12,144 @@ using namespace std;
 
 DataInfo::DataInfo()
 {
-    ImageMapLen = 0;
-    TextMapLen = 0;
-    status=0;
+    InImageLen = 0;
+    InTextLen = 0;
+    OutImageLen = 0;
+    OutTextLen = 0;
+    status = 0;
 }
 
-bool DataInfo::ImageMapadd(ImageInfo myimageinfo)
+bool DataInfo::Imageadd(ImageInfo myimageinfo)
 {
     write_lock wlock(ImageMutex);
     string mykey = myimageinfo.GetImagePath();
-    if (!ImageMap.count(mykey))
+    if (!InImageList.count(mykey))
     {
-        ImageMap[mykey] = myimageinfo;
+        InImageList[mykey] = myimageinfo;
+        InImageLen++;
         return true;
     }
     else
     {
-        cout<<"key has already exit"<<endl;
+        cout << "key has already exit" << endl;
         return false;
     }
-    
 }
 
-bool DataInfo::TextMapadd(TextInfo mytextinfo)
+bool DataInfo::Textadd(TextInfo mytextinfo)
 {
     write_lock wlock(TextMutex);
-    string myid = mytextinfo.GetTextId;
-    if (!TextMap.count(myid))
+    string myid = mytextinfo.GetTextId();
+    if (!InTextList.count(myid))
     {
-        TextMap(myid) = mytextinfo;
+        InTextList[myid] = mytextinfo;
+        InTextLen++;
         return true;
     }
     else
     {
-        cout<<"id has alread exit"<<ednl;
+        cout << "id has alread exit" << endl;
         return false;
     }
-    
 }
-
-
+   
 ImageInfo DataInfo::GetImageInfo(string key)
 {
     read_lock rlock(ImageMutex);
-    if (ImageMap.count(key))
+    if (InImageList.count(key))
     {
-        return ImageMap[key];
+        return InImageList[key];
     }
     else
     {
-        cout<<"no key"<<endl;    
+        cout << "no key" << endl;
         return ImageInfo();
     }
-    
 }
 
 TextInfo DataInfo::GetTextInfo(string key)
 {
     read_lock rlock(TextMutex);
-    if(TextInfo.count(key))
+    if (InTextList .count(key))
     {
-        return TextMap[key];
+        return InTextList[key];
     }
     else
     {
-        cout<<"no key"<<endl;
+        cout << "no key" << endl;
     }
 }
 
-bool DataInfo::UpdateImageMap(string mykey, ImageInfo myimageinfo)
+bool DataInfo::UpdateImageList(string mykey, ImageInfo myimageinfo)
 {
     write_lock wlock(ImageMutex);
-    if (ImageMap.count(key))
+    if (InImageList.count(mykey))
     {
-        ImageMap[mykey] = myimageinfo;
+        InImageList[mykey] = myimageinfo;
         return true;
     }
     else
     {
-        cout<<"update faild"<<endl;
+        cout << "update faild" << endl;
         return false;
-    }    
+    }
 }
 
-bool DataInfo::UpdateTextMap(string mykey, TextInfo mytextinfo)
+bool DataInfo::UpdateTextList(string mykey, TextInfo mytextinfo)
 {
     write_lock wlock(TextMutex);
-    if(TextMap.count(key))
+    if (InTextList.count(mykey))
     {
-        TextMap[mykey] = mytextinfo;
+        InTextList[mykey] = mytextinfo;
         return true;
     }
     else
     {
-        cout<<"update faild"<<endl;
+        cout << "update faild" << endl;
         return false;
     }
 }
 
-bool DataInfo::RemoveImageMap(string mykey)
+bool DataInfo::RemoveImage(string mykey)
 {
-     write_lock wlock(ImageMutex);
-    if(ImageMap.count(mykey))
+    write_lock wlock(ImageMutex);
+    if (InImageList.count(mykey))
     {
-        ImageMap.ease(mykey);
+        InImageList.erase(mykey);
+        InImageLen--;
         return true;
-    } 
+    }
     else
     {
-        cout<<"remove faild"<<endl;
+        cout << "remove faild" << endl;
         return false;
     }
 }
 
-bool DataInfo::RemoveTextMap(string key)
+bool DataInfo::RemoveText(string mykey)
 {
-     write_lock wlock(TextMutex);
-    if(TextMap.count(mykey))
+    write_lock wlock(TextMutex);
+    if (InImageList.count(mykey))
     {
-        TextMap.count(mykey);
+        InImageList.erase(mykey);
+        InTextLen--;
         return true;
     }
     else
     {
-        cout<<"remove faild"<<endl;
-        rreturn false;
+        cout << "remove faild" << endl;
+        return false;
     }
 }
 
 int DataInfo::GetImageLen()
 {
-    return ImageMapLen;
+    return InImageLen;
 }
 
 int DataInfo::GetTextLen()
 {
-    return TextLen();
+    return InTextLen;
 }
 
 void DataInfo::SetDataSession(string mysession)
@@ -170,3 +172,37 @@ string DataInfo::GetDataTime()
     return DataTime;
 }
 
+bool DataInfo::OutImageadd(ImageInfo myimageinfo)
+{
+    write_lock wlock(ImageMutex);
+    string mykey = myimageinfo.GetImagePath();
+    if (!OutImageList.count(mykey))
+    {
+        OutImageList[mykey] = myimageinfo;
+        OutImageLen++;
+        return true;
+    }
+    else
+    {
+        cout << "key has already exit" << endl;
+        return false;
+    }
+}
+
+bool DataInfo::OutTextadd(TextInfo mytextinfo)
+{
+    write_lock wlock(TextMutex);
+    string myid = mytextinfo.GetTextId();
+    if (!OutTextList.count(myid))
+    {
+        OutTextList[myid]= mytextinfo;
+        OutTextLen++;
+        return true;
+    }
+    else
+    {
+        cout << "id has alread exit" << endl;
+        return false;
+    }
+}
+   

@@ -2,12 +2,13 @@
  * @Author: nightli
  * @Date: 2020-09-29 16:17:56
  * @LastEditors: nightli
- * @LastEditTime: 2020-10-12 23:36:13
+ * @LastEditTime: 2020-10-13 22:05:51
  * @FilePath: /mycenter/Common.hpp
  * @Emile: 1658484908@qq.com
  */
 #include <iostream>
 #include <string>
+#include <boost/thread/shared_mutex.hpp>
 
 #include "json/json.h"
 

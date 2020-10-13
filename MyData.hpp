@@ -2,7 +2,7 @@
  * @Author: nightli
  * @Date: 2020-10-12 23:19:32
  * @LastEditors: nightli
- * @LastEditTime: 2020-10-13 16:18:22
+ * @LastEditTime: 2020-10-13 22:18:21
  * @FilePath: /mycenter/MyData.hpp
  * @Emile: 1658484908@qq.com
  */
@@ -15,26 +15,30 @@
 
 using namespace std;
 
-class 
+class DataInfo
 {
 public:
 DataInfo();
-DataInfo
-bool ImageMapadd(ImageInfo myimageinfo);
 
-bool TextMapadd(TextMap myimageinfo);
+bool Imageadd(ImageInfo myimageinfo);
+
+bool Textadd(TextInfo myimageinfo);
+
+bool OutImageadd(ImageInfo myimageinfo);
+
+bool OutTextadd(TextInfo myimageinfo);
 
 ImageInfo GetImageInfo(string key);
 
 TextInfo GetTextInfo(string key);
 
-bool UpdateImageMap(string mykey, ImageInfo myimageinfo);
+bool UpdateImageList(string mykey, ImageInfo myimageinfo);
 
-bool UpdateTextMap(string mykey, TextInfo mytextinfo);
+bool UpdateTextList(string mykey, TextInfo mytextinfo);
 
-bool RemoveImageMap(string mykey);
+bool RemoveImage(string mykey);
 
-bool RemoveTextMap(string mykey);
+bool RemoveText(string mykey);
 
 int GetImageLen();
 
@@ -53,14 +57,19 @@ void SetStatus(int status);
 int GetStatus();
 
 private:
-    map<string, ImageInfo> ImageMap;
-    int ImageMapLen;
-    map<string, TextInfo> TextMap;
-    int TextMapLen;
+    map<string, ImageInfo>InImageList;
+    int InImageLen;
+    map<string, TextInfo> InTextList;
+    int InTextLen;
+
+    map<string, ImageInfo>OutImageList;
+    int OutImageLen;
+    map<string, TextInfo>OutTextList;
+    int OutTextLen;
     string DataSession;
     string DataTime;
     int status;
 
     boost::shared_mutex ImageMutex;
     boost::shared_mutex TextMutex;
-}
+};
