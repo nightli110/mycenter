@@ -2,7 +2,7 @@
  * @Author: nightli
  * @Date: 2020-10-12 23:19:32
  * @LastEditors: nightli
- * @LastEditTime: 2020-10-12 23:48:05
+ * @LastEditTime: 2020-10-13 16:18:22
  * @FilePath: /mycenter/MyData.hpp
  * @Emile: 1658484908@qq.com
  */
@@ -15,18 +15,51 @@
 
 using namespace std;
 
-class DataInfo
+class 
 {
 public:
+DataInfo();
+DataInfo
 bool ImageMapadd(ImageInfo myimageinfo);
 
 bool TextMapadd(TextMap myimageinfo);
 
+ImageInfo GetImageInfo(string key);
+
+TextInfo GetTextInfo(string key);
+
+bool UpdateImageMap(string mykey, ImageInfo myimageinfo);
+
+bool UpdateTextMap(string mykey, TextInfo mytextinfo);
+
+bool RemoveImageMap(string mykey);
+
+bool RemoveTextMap(string mykey);
+
+int GetImageLen();
+
+int GetTextLen();
+
+void SetDataSession(string mysession);
+
+void SetDataTime(string time);
+
+string GetDataSession();
+
+string GetDataTime();
+
+void SetStatus(int status);
+
+int GetStatus();
+
 private:
-    map<int, ImageInfo> ImageMap;
+    map<string, ImageInfo> ImageMap;
     int ImageMapLen;
-    map<int, TextInfo> TextMap;
+    map<string, TextInfo> TextMap;
     int TextMapLen;
+    string DataSession;
+    string DataTime;
+    int status;
 
     boost::shared_mutex ImageMutex;
     boost::shared_mutex TextMutex;
