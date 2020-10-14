@@ -23,6 +23,7 @@
 #endif
 
 #include "MyAPPAction.hpp"
+#include "MyCenter.hpp"
 using namespace std;
 
 using namespace boost::property_tree;
@@ -42,6 +43,8 @@ int main()
     db.initDB("localhost", "root", "123456", "application");
 
     mytest.InitDB(&db);
+
+    MyCenter CeneterView;
     shared_ptr<MyAPPActionView> AppActionView = make_shared<MyAPPActionView>(&mytest);
     server.resource["^/inference/register"]["POST"] = [AppActionView](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request) {
         try
@@ -118,6 +121,18 @@ int main()
         response->write(request->path_match[1].str());
     };
 
+    server.resource["^/omsdata"]["POST"] = [CeneterView](shared_ptr<HttpServer::Response>, shared_ptr<HttpServer::Request> request)
+    {
+        try
+        {
+            
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << '\n';
+        }
+        
+    }
     promise<unsigned short> server_port;
     thread server_thread([&server, &server_port]() {
         // Start server

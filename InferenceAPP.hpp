@@ -2,14 +2,13 @@
  * @Author: nightli
  * @Date: 2020-09-29 15:44:29
  * @LastEditors: nightli
- * @LastEditTime: 2020-10-12 23:36:34
+ * @LastEditTime: 2020-10-14 10:00:14
  * @FilePath: /mycenter/InferenceAPP.hpp
  * @Emile: 1658484908@qq.com
  */
 #include <string>
 #include <iostream>
 #include <map>
-#include <boost/thread/shared_mutex.hpp>
 #include <mysql/mysql.h>
 
 #include "Common.hpp"

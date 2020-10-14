@@ -2,12 +2,13 @@
  * @Author: nightli
  * @Date: 2020-10-12 23:19:32
  * @LastEditors: nightli
- * @LastEditTime: 2020-10-13 22:18:21
+ * @LastEditTime: 2020-10-14 16:36:52
  * @FilePath: /mycenter/MyData.hpp
  * @Emile: 1658484908@qq.com
  */
 #include <iostream>
 #include <map>
+#include <boost/fiber/condition_variable.hpp>
 
 #include "MyText.hpp"
 #include "MyImage.hpp"
@@ -56,6 +57,9 @@ void SetStatus(int status);
 
 int GetStatus();
 
+void DataGet() ;
+
+void DataProcess();
 private:
     map<string, ImageInfo>InImageList;
     int InImageLen;
@@ -70,6 +74,8 @@ private:
     string DataTime;
     int status;
 
+    boost::condition_variable_any CondGet;
+    boost::mutex CondMu;
     boost::shared_mutex ImageMutex;
     boost::shared_mutex TextMutex;
 };
