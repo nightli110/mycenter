@@ -6,6 +6,12 @@
  * @FilePath: /mycenter/Common.hpp
  * @Emile: 1658484908@qq.com
  */
+#pragma once
+#ifndef  _COMMOM_HPP
+#define _COMMOM_HPP
+
+#endif
+
 #include <iostream>
 #include <string>
 #include <boost/thread/shared_mutex.hpp>

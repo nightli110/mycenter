@@ -6,6 +6,8 @@
  * @FilePath: /mycenter/InferenceAPP.hpp
  * @Emile: 1658484908@qq.com
  */
+#pragma once
+
 #include <string>
 #include <iostream>
 #include <map>

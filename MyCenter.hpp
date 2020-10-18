@@ -7,7 +7,6 @@
  * @Emile: 1658484908@qq.com
  */
 #include <iostream>
-#include "Common.hpp"
 #include "InferenceAPP.hpp"
 #include "MyData.hpp"
 
@@ -21,5 +20,5 @@ class MyCenter
     private:
     map<string,  DataInfo> DataMsgs;
     map<string, inferenceAPP> OnlineApp;
-    map<string, inferenceApp> OfflineApp;
-}
+    map<string, inferenceAPP> OfflineApp;
+};
