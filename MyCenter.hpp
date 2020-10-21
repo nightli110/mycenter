@@ -14,11 +14,22 @@ using namespace std;
 
 class MyCenter
 {
-    public:
-    
-    
-    private:
-    map<string,  DataInfo> DataMsgs;
-    map<string, inferenceAPP> OnlineApp;
-    map<string, inferenceAPP> OfflineApp;
+public:
+    bool ProcessData(Json::Value DataInfoJson);
+
+    bool PostData();
+
+    bool CallInferenceOnline(string Inferencename);
+
+    void InitCenter(InferenceAPPMap* MyAppMap);
+
+    void UpdateAppdata();
+
+private:
+    InferenceAPPMap *CenterAppMap;
+
+    map<string, DataInfo> DataMsgs;
+    map<string, bool> AppStatus;
+
+    boost::shared_mutex read_write_mutex;
 };
