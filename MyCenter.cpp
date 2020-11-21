@@ -10,9 +10,14 @@ bool MyCenter::ProcessData(Json::Value request_json)
     string ReqAppName = request_json['appname'].asString();
     if (AppStatus.count(ReqAppName))
     {
-        if(AppStatus[ReqAppName] == 1&& AppStatus[ReqAppName] ==3)
+        if(AppStatus[ReqAppName] == 2)
         {
-                bool  resstatsu = PostData();
+                bool  resstatus = PostData();
+        }
+        else if (AppStatus[ReqAppName]==3)
+        {
+                bool restatus = CallInferenceOnline(ReqAppName)
+                
         }
     }
     else
@@ -23,7 +28,7 @@ bool MyCenter::ProcessData(Json::Value request_json)
 }
 
 //TODO
-bool MyCenter::PostData()
+bool MyCenter::PostData(Json::Value request_json)
 {
 
 }
