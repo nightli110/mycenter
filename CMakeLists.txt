@@ -1,7 +1,7 @@
 # Examples
 
 project(hello_world_server)
-cmake_minimum_required(VERSION 3.18)
+ cmake_minimum_required(VERSION 3.5)
 set(CMAKE_BUILD_TYPE "Debug")
 
 set(Boost_USE_STATIC_LIBS ON)

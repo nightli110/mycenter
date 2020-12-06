@@ -1,5 +1,5 @@
 # mycenter
-MyImageTool 中心控制模块(开发中)
+LiuDao 中心控制(天道)模块(开发中)
 开发工具vscode  
 目前是一个http 服务器，基于simple-web-server框架+mysql开发  
 
