@@ -22,8 +22,8 @@
 #include "crypto.hpp"
 #endif
 
-#include "MyAPPAction.hpp"
-#include "MyCenter.hpp"
+#include "mycenter/App/MyAPPAction.hpp"
+#include "mycenter/center/MyCenter.hpp"
 using namespace std;
 
 using namespace boost::property_tree;

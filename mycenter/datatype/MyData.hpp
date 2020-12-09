@@ -12,7 +12,7 @@
 
 #include "MyText.hpp"
 #include "MyImage.hpp"
-#include "Common.hpp"
+#include "../common/Common.hpp"
 
 using namespace std;
 

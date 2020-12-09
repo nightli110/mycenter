@@ -7,14 +7,16 @@
  * @Emile: 1658484908@qq.com
  */
 #include <iostream>
-#include "InferenceAPP.hpp"
-#include "MyData.hpp"
+#include "../App/InferenceAPP.hpp"
+#include "../datatype/MyData.hpp"
 
 using namespace std;
 
 class MyCenter
 {
 public:
+
+    MyCenter(const MyCenter&);
     bool ProcessData(Json::Value DataInfoJson);
 
     bool PostData();

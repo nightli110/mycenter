@@ -13,8 +13,8 @@
 #include <map>
 #include <mysql/mysql.h>
 
-#include "Common.hpp"
-#include "MyDB.hpp"
+#include "../common/Common.hpp"
+#include "../DB/MyDB.hpp"
 
 using namespace std;
 

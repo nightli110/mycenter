@@ -1,8 +1,9 @@
 # Examples
 
 project(hello_world_server)
- cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.5)
 set(CMAKE_BUILD_TYPE "Debug")
+SET(CMAKE_CXX_FLAGS "-std=c++0x")
 
 set(Boost_USE_STATIC_LIBS ON)
 set(Boost_USE_MULTITHREADED ON)
@@ -17,13 +18,13 @@ set(JSON_LIBS jsoncpp)
 set(SIMPLE_HTTP_LIBS simple-web-server )
 aux_source_directory(. CenterApp)
 
-include_directories(third_party)
-include_directories(${PROJECT_BINARY_DIR}/third_party)
-include_directories(third_party/jsoncpp)
-include_directories(third_party/simplehttp)
+include_directories(3rdparty)
+include_directories(${PROJECT_BINARY_DIR}/3rdparty)
+include_directories(3rdparty/jsoncpp)
+include_directories(3rdparty/simplehttp)
 
-add_subdirectory(third_party/jsoncpp)
-add_subdirectory(third_party/simplehttp)
+add_subdirectory(3rdparty/jsoncpp)
+add_subdirectory(3rdparty/simplehttp)
 link_directories(/usr/lib64/mysql)
 
 
