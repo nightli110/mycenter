@@ -7,7 +7,7 @@ SET(CMAKE_CXX_FLAGS "-std=c++0x")
 
 set(Boost_USE_STATIC_LIBS ON)
 set(Boost_USE_MULTITHREADED ON)
-find_package(Boost 1.66.0 REQUIRED COMPONENTS system date_time filesystem thread)
+find_package(Boost REQUIRED COMPONENTS system date_time filesystem thread)
 if(Boost_FOUND)
     message(STATUS "Boost version: ${Boost_VERSION}")
     include_directories(${Boost_INCLUDE_DIRS})
@@ -16,19 +16,25 @@ endif()
 
 set(JSON_LIBS jsoncpp)
 set(SIMPLE_HTTP_LIBS simple-web-server )
+set(COMMOM_LIBS commom)
+
 aux_source_directory(. CenterApp)
 
-include_directories(3rdparty)
 include_directories(${PROJECT_BINARY_DIR}/3rdparty)
 include_directories(3rdparty/jsoncpp)
 include_directories(3rdparty/simplehttp)
+include_directories(${PROJECT_BINARY_DIR}/mycenter)
+include_directories(mycenter/commom)
+
 
 add_subdirectory(3rdparty/jsoncpp)
 add_subdirectory(3rdparty/simplehttp)
+
 link_directories(/usr/lib64/mysql)
 
-
-set(CENTER_LIBS ${CMAKE_DL_LIBS} ${JSON_LIBS} ${SIMPLE_HTTP_LIBS} ${Boost_LIBRARIES})
+add_subdirectory(mycenter/commom)
+ 
+set(CENTER_LIBS ${CMAKE_DL_LIBS} ${JSON_LIBS} ${SIMPLE_HTTP_LIBS} ${Boost_LIBRARIES} ${COMMOM_LIBS})
 
 
 add_executable(hello_world_server ${CenterApp})

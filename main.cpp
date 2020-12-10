@@ -24,6 +24,7 @@
 
 #include "mycenter/App/MyAPPAction.hpp"
 #include "mycenter/center/MyCenter.hpp"
+#include "mycenter/common/Common.hpp"
 using namespace std;
 
 using namespace boost::property_tree;
@@ -44,7 +45,7 @@ int main()
 
     mytest.InitDB(&db);
 
-    MyCenter CeneterView;
+    MyCenter *CeneterView = new MyCenter;
     shared_ptr<MyAPPActionView> AppActionView = make_shared<MyAPPActionView>(&mytest);
     server.resource["^/inference/register"]["POST"] = [AppActionView](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request) {
         try
@@ -121,7 +122,7 @@ int main()
         response->write(request->path_match[1].str());
     };
 
-    server.resource["^/omsdata"]["POST"] = [CeneterView](shared_ptr<HttpServer::Response>, shared_ptr<HttpServer::Request> request)
+    server.resource["^/omsdata"]["POST"] = [&CeneterView](shared_ptr<HttpServer::Response>, shared_ptr<HttpServer::Request> request)
     {
         try
         {
