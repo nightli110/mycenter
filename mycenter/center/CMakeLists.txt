@@ -7,4 +7,4 @@ set(SRCS
     MyCenter.cpp
 	)
 
-add_library(MyCenter STATIC ${SRCS})
+add_library(center STATIC ${SRCS})

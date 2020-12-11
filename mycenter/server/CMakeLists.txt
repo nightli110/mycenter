@@ -7,4 +7,4 @@ set(SRCS
     Myserver.cpp
 	)
 
-add_library(common STATIC ${SRCS})
+add_library(server STATIC ${SRCS})

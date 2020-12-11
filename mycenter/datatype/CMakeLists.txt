@@ -8,7 +8,7 @@ set(SRCS
     MyImage.hpp
     MyImage.cpp
     MyText.hpp
-    MyTetx.cpp
+    MyText.cpp
 	)
 
 add_library(datatype STATIC ${SRCS})

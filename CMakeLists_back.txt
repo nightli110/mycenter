@@ -13,21 +13,30 @@ if(Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})
 endif()
 
+set(TOP_DIR ${CMAKE_CURRENT_LIST_DIR})
 set(JSON_LIBS jsoncpp)
 set(SIMPLE_HTTP_LIBS simple-web-server )
-set(Data datatype)
-set(Mycenter)
+set(COMMOM_LIBS commom)
 
 aux_source_directory(. CenterApp)
 
 include_directories(${PROJECT_BINARY_DIR}/3rdparty)
 include_directories(3rdparty/jsoncpp)
 include_directories(3rdparty/simplehttp)
+include_directories(${PROJECT_BINARY_DIR}/mycenter)
 
 
 add_subdirectory(3rdparty/jsoncpp)
 add_subdirectory(3rdparty/simplehttp)
-add_subdirectory(mycenter)
 
-message(STATUS "hhh:${PROJECT_BINARY_DIR}")
+link_directories(/usr/lib64/mysql)
 
+add_subdirectory(commom)
+ 
+set(CENTER_LIBS ${CMAKE_DL_LIBS} ${JSON_LIBS} ${SIMPLE_HTTP_LIBS} ${Boost_LIBRARIES})
+
+
+add_executable(hello_world_server ${CenterApp})
+target_link_libraries(hello_world_server ${CENTER_LIBS})
+target_link_libraries(hello_world_server libmysqlclient.so)
+target_include_directories(hello_world_server PRIVATE ${Boost_INCLUDE_DIR})
