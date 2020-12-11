@@ -21,7 +21,7 @@ public:
     MyCenter(const MyCenter&);
     bool ProcessData(Json::Value DataInfoJson);
 
-    bool PostData();
+    bool PostData(Json::Value request_json);
 
     bool CallInferenceOnline(string Inferencename);
 

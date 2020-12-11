@@ -17,12 +17,11 @@ bool MyCenter::ProcessData(Json::Value request_json)
     {
         if(AppStatus[ReqAppName] == 2)
         {
-                bool  resstatus = PostData();
+               // bool  resstatus = PostData();
         }
         else if (AppStatus[ReqAppName]==3)
         {
-                bool restatus = CallInferenceOnline(ReqAppName)
-                
+                //bool restatus = CallInferenceOnline(ReqAppName);
         }
     }
     else
@@ -35,12 +34,12 @@ bool MyCenter::ProcessData(Json::Value request_json)
 //TODO
 bool MyCenter::PostData(Json::Value request_json)
 {
-
+    return true;
 }
 
  bool MyCenter::CallInferenceOnline(string Inferencename)
  {
-
+     return true;
  }
 
 void MyCenter::InitCenter(InferenceAPPMap* MyAppMap)

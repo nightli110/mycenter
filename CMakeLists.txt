@@ -15,8 +15,23 @@ endif()
 
 set(JSON_LIBS jsoncpp)
 set(SIMPLE_HTTP_LIBS simple-web-server )
-set(Data datatype)
 set(Mycenter)
+
+####model
+set(BASECENTER center)
+set(APP App)
+set(COMMON MyCommon)
+set(DATATYPE datatype)
+set(DB DB)
+set(SERVER server)
+
+
+#add_subdirectory(App)
+#add_subdirectory(center)
+#add_subdirectory(common)
+#add_subdirectory(datatype)
+#add_subdirectory(DB)
+#add_subdirectory(server)
 
 aux_source_directory(. CenterApp)
 
@@ -27,7 +42,25 @@ include_directories(3rdparty/simplehttp)
 
 add_subdirectory(3rdparty/jsoncpp)
 add_subdirectory(3rdparty/simplehttp)
+
 add_subdirectory(mycenter)
+#add_subdirectory(mycenter/App)
+#add_subdirectory(mycenter/center)
+#add_subdirectory(mycenter/common)
+#add_subdirectory(mycenter/datatype)
+#add_subdirectory(mycenter/DB)
+#add_subdirectory(mycenter/server)
 
-message(STATUS "hhh:${PROJECT_BINARY_DIR}")
 
+set(CENTER_LIBS ${CMAKE_DL_LIBS} ${JSON_LIBS} ${SIMPLE_HTTP_LIBS} ${Boost_LIBRARIES} ${Mycenter_LIBS})
+
+set(MODEL_LIBS MyCommon)
+
+message(STATUS "hhh:${MODEL_LIBS}")
+add_executable(hello_world_server ${CenterApp})
+#target_link_libraries(hello_world_server MyCommon)
+target_link_libraries(hello_world_server ${MODEL_LIBS})
+target_link_libraries(hello_world_server ${CENTER_LIBS})
+
+target_link_libraries(hello_world_server libmysqlclient.so)
+target_include_directories(hello_world_server PRIVATE ${Boost_INCLUDE_DIR})
