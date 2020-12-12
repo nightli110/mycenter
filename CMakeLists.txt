@@ -44,21 +44,13 @@ add_subdirectory(3rdparty/jsoncpp)
 add_subdirectory(3rdparty/simplehttp)
 
 add_subdirectory(mycenter)
-#add_subdirectory(mycenter/App)
-#add_subdirectory(mycenter/center)
-#add_subdirectory(mycenter/common)
-#add_subdirectory(mycenter/datatype)
-#add_subdirectory(mycenter/DB)
-#add_subdirectory(mycenter/server)
-
 
 set(CENTER_LIBS ${CMAKE_DL_LIBS} ${JSON_LIBS} ${SIMPLE_HTTP_LIBS} ${Boost_LIBRARIES} ${Mycenter_LIBS})
 
-set(MODEL_LIBS MyCommon)
+set(MODEL_LIBS MyCommon App center datatype DB server)
 
-message(STATUS "hhh:${MODEL_LIBS}")
+
 add_executable(hello_world_server ${CenterApp})
-#target_link_libraries(hello_world_server MyCommon)
 target_link_libraries(hello_world_server ${MODEL_LIBS})
 target_link_libraries(hello_world_server ${CENTER_LIBS})
 
