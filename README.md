@@ -1,7 +1,11 @@
 # mycenter
 LiuDao 中心控制(天道)模块(开发中)
 开发工具vscode  
-目前是一个http 服务器，基于simple-web-server框架+mysql开发  
+
+主要依赖包：   
+1. boost1.74  
+2. mysql  
+3. glog  
 
 目前主要实现推理实例的注册，解除注册，上线，下线，MyCenter具有一定 的服务治理功能   
 推理应用

@@ -1,0 +1,8 @@
+git clone https://github.com/google/glog
+sudo apt-get install autoconf automake libtool
+cd glog
+mkdir build
+cd build
+cmake ..
+make -j8
+sudo make install

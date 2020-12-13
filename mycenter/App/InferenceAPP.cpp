@@ -7,7 +7,7 @@ Json::Value inferenceAPPToJson(const inferenceAPP myapp)
     myjson["id"] = myapp.id;
     myjson["inference_name"] = myapp.inference_name;
     myjson["model_name"] = myapp.model_name;
-    myjson["register_name"] = myapp.register_time;
+    myjson["register_time"] = myapp.register_time;
     myjson["ip"] = myapp.ip;
     myjson["status"] = myapp.status;
     myjson["inference_input"] = myapp.inference_input;
@@ -130,6 +130,7 @@ bool InferenceAPPMap::InferenceMapAdd(inferenceAPP myapp)
     else
     {
         //TODO 写log 异常  异步写库
+        cout<<"hhh"<<endl;
         AppMap[myapp.inference_name] = myapp;
         InferenceMapToDB(myapp);
         cout << "app add success" << endl;

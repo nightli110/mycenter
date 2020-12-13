@@ -1,0 +1,6 @@
+git clone https://github.com/gflags/gflags
+cd gflags
+mkdir build && cd build
+cmake ..
+make -j8
+sudo make install

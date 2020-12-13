@@ -15,7 +15,7 @@
 #include <iostream>
 #include <string>
 #include <boost/thread/shared_mutex.hpp>
-
+#include <glog/logging.h>
 #include "json/json.h"
 
 using namespace std;

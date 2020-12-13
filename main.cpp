@@ -24,11 +24,16 @@ using namespace boost::property_tree;
 using HttpServer = SimpleWeb::Server<SimpleWeb::HTTP>;
 using HttpClient = SimpleWeb::Client<SimpleWeb::HTTP>;
 
-int main()
+int main(int argc, char* argv[])
 {
+
+    FLAGS_logtostderr = 1;  //输出到控制台
+    google::InitGoogleLogging(argv[0]);    // 初始化
+    LOG(INFO) << "server start";
+    
     PrintMonster();
     HttpServer server;
-    server.config.port = 8080;
+    server.config.port = 5000;
 
     MyDB db;
     InferenceAPPMap mytest;
@@ -43,7 +48,7 @@ int main()
         try
         {
             string response_str="helloworld";
-            responsr->write(response_str);
+            response->write(response_str);
         }
         catch (const exception &e)
         {
