@@ -16,12 +16,10 @@ MyAPPActionView::MyAPPActionView(InferenceAPPMap *mymap)
 string MyAPPActionView::AppRegister(string requestjson)
 {
     inferenceAPP myapp;
-    cout << "register" << endl;
     if (JsonStringToinferenceAPP(requestjson, &myapp))
     {
         Json::Value json;
         auto suc = appmap->InferenceMapAdd(myapp);
-
         json["success"] = suc;
         auto reponsejson = JsonToString(json);
         return reponsejson;

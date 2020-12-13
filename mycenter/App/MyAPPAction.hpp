@@ -8,6 +8,7 @@
  */
 #include <iostream>
 #include <thread>
+#include <glog/logging.h>
 
 #include "InferenceAPP.hpp"
 #include <boost/property_tree/json_parser.hpp>

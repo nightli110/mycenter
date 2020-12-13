@@ -21,7 +21,6 @@ Json::Value inferenceAPPToJson(const inferenceAPP myapp)
 inferenceAPP JsonToinferenceAPP(const Json::Value myjson)
 {
     inferenceAPP myapp;
-    myapp.id = myjson["id"].asString();
     myapp.inference_name = myjson["inference_name"].asString();
     myapp.model_name = myjson["model_name"].asString();
     myapp.register_time = myjson["register_time"].asString();
@@ -124,16 +123,15 @@ bool InferenceAPPMap::InferenceMapAdd(inferenceAPP myapp)
     write_lock wlock(read_write_mutex);
     if (AppMap.count(myapp.inference_name))
     {
-        cout << "app has registerd" << endl;
+        LOG(WARNING)<<"app has registerd";
         return false;
     }
     else
     {
         //TODO 写log 异常  异步写库
-        cout<<"hhh"<<endl;
         AppMap[myapp.inference_name] = myapp;
         InferenceMapToDB(myapp);
-        cout << "app add success" << endl;
+        LOG(INFO)<<"app add success";
     }
     return true;
 }
@@ -148,7 +146,7 @@ bool InferenceAPPMap::InferenceMapRemove(inferenceAPP myapp)
     }
     else
     {
-        cout << "app not register" << endl;
+        LOG(WARNING)<<"app not register";
         return false;
     }
 }
@@ -187,17 +185,18 @@ bool InferenceAPPMap::InferenceMapToDB(inferenceAPP myapp)
                  myapp.inference_name + "\", \"" + myapp.model_name + "\", \"" + myapp.register_time + "\",\"" + myapp.ip +
                  "\", \"" + to_string(myapp.status) + "\", \"" + myapp.inference_input + "\", \"" + myapp.inference_output + "\", \"" +
                  to_string(myapp.model_status) + "\", \"" + to_string(myapp.model_memery) + "\");";
-        cout << sqlstr << endl;
+       LOG(INFO)<<sqlstr;
     }
     else if (myapp.status == 1)
     {
         sqlstr = "delete from app where inference_name =  \"" + myapp.inference_name + "\");";
-        cout << sqlstr << endl;
+        LOG(INFO)<<sqlstr;
     }
     else if (myapp.status==2 || myapp.status==3)
     {
         sqlstr = "update  app set status = " + to_string(myapp.status) + "where inference_name =  \""+ myapp.inference_name +"\");";
-        cout<<sqlstr<<endl;
+        LOG(INFO)<<sqlstr;
+
     }
 
     bool DBsuccess = registerdb->exeSQL(sqlstr);

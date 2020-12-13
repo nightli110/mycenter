@@ -29,7 +29,7 @@ int main(int argc, char* argv[])
 
     FLAGS_logtostderr = 1;  //输出到控制台
     google::InitGoogleLogging(argv[0]);    // 初始化
-    LOG(INFO) << "server start";
+    
     
     PrintMonster();
     HttpServer server;
@@ -45,13 +45,16 @@ int main(int argc, char* argv[])
     // MyCenter *CeneterView;
     shared_ptr<MyAPPActionView> AppActionView = make_shared<MyAPPActionView>(&mytest);
     server.resource["^/helloworld"]["GET"]=[](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request){
+
         try
         {
+            LOG(INFO)<<"server helloworld";
             string response_str="helloworld";
             response->write(response_str);
         }
         catch (const exception &e)
         {
+            LOG(ERROR)<<"helloworld return message:"<<e.what();
             *response << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << strlen(e.what()) << "\r\n\r\n"
                       << e.what();
         }
@@ -60,6 +63,7 @@ int main(int argc, char* argv[])
     server.resource["^/inference/register"]["POST"] = [AppActionView](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request) {
         try
         {
+            LOG(INFO)<<"server register";
             string request_str = request->content.string();
 
             string response_str = AppActionView->AppRegister(request_str);
@@ -68,6 +72,7 @@ int main(int argc, char* argv[])
         }
         catch (const exception &e)
         {
+            LOG(ERROR)<<"register return message:"<<e.what();
             *response << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << strlen(e.what()) << "\r\n\r\n"
                       << e.what();
         }
@@ -76,13 +81,14 @@ int main(int argc, char* argv[])
     server.resource["^/inference/unregister"]["POST"] = [AppActionView](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request) {
         try
         {
-            /* code */
+            LOG(INFO)<<"server unregister";
             string request_str = request->content.string();
             string response_str = AppActionView->AppUnRegister(request_str);
             response->write(response_str);
         }
         catch (const std::exception &e)
         {
+            LOG(ERROR)<<"unregister return message:"<<e.what();
             *response << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << strlen(e.what()) << "\r\n\r\n"
                       << e.what();
         }
@@ -91,13 +97,14 @@ int main(int argc, char* argv[])
     server.resource["^/inference/online"]["POST"] = [AppActionView](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request) {
         try
         {
-            /* code */
+            LOG(INFO)<<"server online";
             string request_str = request->content.string();
             string response_str = AppActionView->AppOnline(request_str);
             response->write(response_str);
         }
         catch (const std::exception &e)
         {
+            LOG(ERROR)<<"online return message:"<<e.what();
             *response << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << strlen(e.what()) << "\r\n\r\n"
                       << e.what();
         }
@@ -106,13 +113,14 @@ int main(int argc, char* argv[])
     server.resource["^/inference/offline"]["POST"] = [AppActionView](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request) {
         try
         {
-            /* code */
+            LOG(INFO)<<"server offline";
             string request_str = request->content.string();
             string response_str = AppActionView->AppOffLine(request_str);
             response->write(response_str);
         }
         catch (const std::exception &e)
         {
+            LOG(ERROR)<<"offline return message:"<<e.what();
             *response << "HTTP/1.1 400 Bad Request\r\nContent-Length: " << strlen(e.what()) << "\r\n\r\n"
                       << e.what();
         }
@@ -121,11 +129,13 @@ int main(int argc, char* argv[])
     server.resource["^/infomap"]["GET"] = [AppActionView](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request) {
         try
         {
+            LOG(INFO)<<"server get infomap";
             string response_str = AppActionView->GetMap();
             response->write(response_str);
         }
         catch (const std::exception &e)
         {
+            LOG(ERROR)<<"infomap return message:"<<e.what();
             std::cerr << e.what() << '\n';
         }
 
@@ -151,6 +161,7 @@ int main(int argc, char* argv[])
     promise<unsigned short> server_port;
     thread server_thread([&server, &server_port]() {
         // Start server
+        LOG(INFO) << "server start";
         server.start([&server_port](unsigned short port) {
             server_port.set_value(port);
         });
