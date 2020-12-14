@@ -90,7 +90,7 @@ bool InferenceAPPMap::MysqlResToAppMap(MYSQL_RES *result)
     }
     else
     {
-        cout << "MYSQL_RES is NULL" << endl;
+        LOG(INFO)<< "MYSQL_RES is NULL";
         return true;
     }
 }
@@ -139,7 +139,7 @@ bool InferenceAPPMap::InferenceMapAdd(inferenceAPP myapp)
         } 
         else 
         {
-            LOG(ERROR)<<"app registerd false";
+            LOG(ERROR)<<"app registerd failed";
             return false;
         }
         
@@ -153,7 +153,7 @@ bool InferenceAPPMap::InferenceMapRemove(inferenceAPP myapp)
     write_lock wlock(read_write_mutex);
     if (AppMap.count(myapp.inference_name))
     {
-        if (APPMap[myapp.inference_name].status==3)
+        if (AppMap[myapp.inference_name].status==3)
         {
             bool removesuccess = InferenceMapToDB(myapp);
             if (removesuccess)
@@ -243,6 +243,49 @@ bool InferenceAPPMap::InferenceMapToDB(inferenceAPP myapp)
     bool DBsuccess = registerdb->exeSQL(sqlstr);
 
     return DBsuccess;
+}
+
+MYSQL_RES* InferenceAPPMap::InferenceMapfromDB()
+{
+    string sqlstr;
+    sqlstr = "select * from app order by id;";
+    bool fetchsuccess = registerdb->fetch_result(sqlstr);
+    if (fetchsuccess)
+    {
+        return registerdb->getmysqlresult();
+    }
+    else
+    {
+        return NULL;
+    }
+    
+}
+
+MYSQL_RES* InferenceAPPMap::InferenceMapfromDB(string inferencename)
+{
+    string sqlstr;
+    sqlstr = "selct* from app where inference_name=" +inferencename+";";
+    bool fetchsuccess = registerdb->fetch_result(sqlstr);
+    if (fetchsuccess)
+    {
+        return registerdb->getmysqlresult();
+    }
+    else
+    {
+        return NULL;
+    }
+    
+}
+
+void InferenceAPPMap::GetDBALLApp()
+{
+    write_lock wlock(read_write_mutex);
+    MYSQL_RES* mysqldata = InferenceMapfromDB("");
+    if (mysqldata)
+    {
+        MysqlResToAppMap(mysqldata);
+    }
+    
 }
 
 const map<string, inferenceAPP> InferenceAPPMap::GetInferenceMap()

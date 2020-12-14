@@ -1,6 +1,7 @@
 # mycenter
 LiuDao 中心控制(天道)模块(开发中)
-开发工具vscode  
+欢迎看我的中二项目  
+
 
 主要依赖包：   
 1. boost1.74  
@@ -8,7 +9,7 @@ LiuDao 中心控制(天道)模块(开发中)
 3. glog  
 
 目前主要实现推理实例的注册，解除注册，上线，下线，MyCenter具有一定 的服务治理功能   
-推理应用
+推理应用表
 ```
 struct inferenceAPP
 {
@@ -26,7 +27,6 @@ struct inferenceAPP
 ```
 
 ## 目前编译方式
-依赖库boost
 ```
 mkdir build
 cd build
@@ -37,5 +37,4 @@ make -j8
 
 TODO：  
 center 线程逻辑
-重新开始开发web 模块  
 心跳探活  

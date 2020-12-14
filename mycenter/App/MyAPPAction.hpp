@@ -25,7 +25,8 @@ public:
     string AppOnline(string requestjson);
     string AppOffLine(string requestjson);
 
-
+    
+    void GetAllApp();
 private:
     InferenceAPPMap *appmap;
 };

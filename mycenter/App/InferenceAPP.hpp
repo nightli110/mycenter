@@ -61,6 +61,12 @@ public:
 
     const map<string, inferenceAPP> GetInferenceMap();
 
+    void GetDBALLApp();
+
+    MYSQL_RES* InferenceMapfromDB();
+
+    MYSQL_RES* InferenceMapfromDB(string inferencename);
+
     MyDB *GetInferenceDB();
 
 private:

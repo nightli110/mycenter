@@ -90,6 +90,8 @@ bool MyDB::exeSQL(string sql)
     return true;
 }
 
+
+
 bool MyDB::fetch_result(string sql)
 {
     if (mysql_query(mysql, sql.c_str()))

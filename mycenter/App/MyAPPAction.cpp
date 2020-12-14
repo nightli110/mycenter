@@ -45,7 +45,7 @@ string MyAPPActionView::AppUnRegister(string requestjson)
 
         if(myapp.status!=1){
             json["success"] = false;
-            json["failedmessage"] = "app unregister post message status error"
+            json["failedmessage"] = "app unregister post message status error";
             auto reponsejson =JsonToString(json);
             return reponsejson;
         }
@@ -60,7 +60,7 @@ string MyAPPActionView::AppUnRegister(string requestjson)
     {
         Json::Value json;
         json["success"] = "failed";
-        json["failedmessage"] = "JsonstringtoinferenceAPP failed;"
+        json["failedmessage"] = "JsonstringtoinferenceAPP failed ";
         auto reponsejson = JsonToString(json);
         return reponsejson;
     }
@@ -76,7 +76,7 @@ string MyAPPActionView::AppOnline(string requestjson)
 
         if(myapp.status!=2){
             json["success"] = false;
-            json["failedmessage"] = "app online post message status error"
+            json["failedmessage"] = "app online post message status error";
             auto reponsejson =JsonToString(json);
             return reponsejson;
         }
@@ -91,7 +91,7 @@ string MyAPPActionView::AppOnline(string requestjson)
     {
         Json::Value json;
         json["success"] = "failed";
-        json["failedmessage"] = "JsonstringtoinferenceAPP failed;"
+        json["failedmessage"] = "JsonstringtoinferenceAPP failed ";
         auto reponsejson = JsonToString(json);
         return reponsejson;
     }
@@ -103,15 +103,15 @@ string MyAPPActionView::AppOffLine(string requestjson)
     cout << "offline" << endl;
     if (JsonStringToinferenceAPP(requestjson, &myapp))
     {
-
+        Json::Value json;
+        
         if(myapp.status!=3){
             json["success"] = false;
-            json["failedmessage"] = "app offline post message status error"
+            json["failedmessage"] = "app offline post message status error";
             auto reponsejson =JsonToString(json);
             return reponsejson;
         }
 
-        Json::Value json;
         auto suc = appmap->InferenceMapUpdate(myapp);
 
         json["success"] = suc;
