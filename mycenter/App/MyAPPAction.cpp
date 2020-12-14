@@ -34,13 +34,22 @@ string MyAPPActionView::AppRegister(string requestjson)
     }
 }
 
+//TODO 返回值换成returnmessage 带错误信息 解除注册消息格式验证
 string MyAPPActionView::AppUnRegister(string requestjson)
 {
     inferenceAPP myapp;
-    cout << "unregister" << endl;
+    LOG(INFO) << "unregister";
     if (JsonStringToinferenceAPP(requestjson, &myapp))
     {
         Json::Value json;
+
+        if(myapp.status!=1){
+            json["success"] = false;
+            json["failedmessage"] = "app unregister post message status error"
+            auto reponsejson =JsonToString(json);
+            return reponsejson;
+        }
+        
         auto suc = appmap->InferenceMapRemove(myapp);
 
         json["success"] = suc;
@@ -51,6 +60,7 @@ string MyAPPActionView::AppUnRegister(string requestjson)
     {
         Json::Value json;
         json["success"] = "failed";
+        json["failedmessage"] = "JsonstringtoinferenceAPP failed;"
         auto reponsejson = JsonToString(json);
         return reponsejson;
     }
@@ -59,10 +69,18 @@ string MyAPPActionView::AppUnRegister(string requestjson)
 string MyAPPActionView::AppOnline(string requestjson)
 {
     inferenceAPP myapp;
-    cout << "online" << endl;
+    LOG(INFO)<<"App online";
     if (JsonStringToinferenceAPP(requestjson, &myapp))
     {
         Json::Value json;
+
+        if(myapp.status!=2){
+            json["success"] = false;
+            json["failedmessage"] = "app online post message status error"
+            auto reponsejson =JsonToString(json);
+            return reponsejson;
+        }
+
         auto suc = appmap->InferenceMapUpdate(myapp);
 
         json["success"] = suc;
@@ -73,6 +91,7 @@ string MyAPPActionView::AppOnline(string requestjson)
     {
         Json::Value json;
         json["success"] = "failed";
+        json["failedmessage"] = "JsonstringtoinferenceAPP failed;"
         auto reponsejson = JsonToString(json);
         return reponsejson;
     }
@@ -84,6 +103,14 @@ string MyAPPActionView::AppOffLine(string requestjson)
     cout << "offline" << endl;
     if (JsonStringToinferenceAPP(requestjson, &myapp))
     {
+
+        if(myapp.status!=3){
+            json["success"] = false;
+            json["failedmessage"] = "app offline post message status error"
+            auto reponsejson =JsonToString(json);
+            return reponsejson;
+        }
+
         Json::Value json;
         auto suc = appmap->InferenceMapUpdate(myapp);
 

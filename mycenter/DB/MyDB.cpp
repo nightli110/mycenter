@@ -17,7 +17,7 @@ MyDB::MyDB()
     mysql = mysql_init(NULL); //初始化数据库连接变量
     if (mysql == NULL)
     {
-        cout << "Error:" << mysql_error(mysql);
+        LOG(ERROR) << "Error:" << mysql_error(mysql);
         exit(1);
     }
 }
@@ -37,7 +37,7 @@ bool MyDB::initDB(string host, string user, string passwd, string db_name)
     mysql = mysql_real_connect(mysql, host.c_str(), user.c_str(), passwd.c_str(), db_name.c_str(), 0, NULL, 0);
     if (mysql == NULL)
     {
-        cout << "Error: " << mysql_error(mysql);
+        LOG(ERROR)<< "Error: " << mysql_error(mysql);
         exit(1);
     }
     return true;
@@ -48,7 +48,7 @@ bool MyDB::exeSQL(string sql)
     //mysql_query()执行成功返回0,执行失败返回非0值。
     if (mysql_query(mysql, sql.c_str()))
     {
-        cout << "Query Error: " << mysql_error(mysql);
+        LOG(ERROR)<<"Query Error: "<< mysql_error(mysql);
         return false;
     }
     else // 查询成功
@@ -64,12 +64,12 @@ bool MyDB::exeSQL(string sql)
                 row = mysql_fetch_row(result);
                 if (row < 0)
                     break;
-
+                LOG(INFO)<<"search data";
                 for (int j = 0; j < num_fields; j++) //输出每一字段
                 {
-                    cout << row[j] << "\t\t";
+                    LOG(INFO)<< row[j] << "\t\t";
                 }
-                cout << endl;
+                LOG(INFO) << endl;
             }
         }
         else // result==NULL
@@ -81,7 +81,7 @@ bool MyDB::exeSQL(string sql)
             }
             else // error
             {
-                cout << "Get result error: " << mysql_error(mysql);
+                LOG(ERROR)<< "Get result error: " << mysql_error(mysql);
                 return false;
             }
         }
@@ -94,7 +94,7 @@ bool MyDB::fetch_result(string sql)
 {
     if (mysql_query(mysql, sql.c_str()))
     {
-        cout << "Query Error: " << mysql_error(mysql);
+        LOG(ERROR) << "Query Error: " << mysql_error(mysql);
         return false;
     }
     else
@@ -113,7 +113,7 @@ MYSQL_RES *MyDB::getmysqlresult()
     }
     else
     {
-        cout << "result is null" << endl;
+        LOG(INFO) << "result is null" << endl;
         return result;
     }
 }

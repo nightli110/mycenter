@@ -11,6 +11,7 @@
 #include <iostream>
 #include <string>
 #include <mysql/mysql.h>
+#include <glog/logging.h>
 using namespace std;
 
 class MyDB

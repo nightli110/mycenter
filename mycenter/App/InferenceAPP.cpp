@@ -46,6 +46,7 @@ bool JsonStringToinferenceAPP(const string &json_str, inferenceAPP *myapp)
 
     if (!json)
     {
+        LOG(ERROR)<<"StringTOJson filed: "<<json_str;
         return false;
     }
 
@@ -128,21 +129,51 @@ bool InferenceAPPMap::InferenceMapAdd(inferenceAPP myapp)
     }
     else
     {
-        //TODO 写log 异常  异步写库
-        AppMap[myapp.inference_name] = myapp;
-        InferenceMapToDB(myapp);
-        LOG(INFO)<<"app add success";
+        //TODO 写库更好方式
+        bool addsuccess = InferenceMapToDB(myapp);
+        if (addsuccess)
+        {
+            LOG(INFO)<<"app registerd success";
+            AppMap[myapp.inference_name] = myapp;
+            return true;
+        } 
+        else 
+        {
+            LOG(ERROR)<<"app registerd false";
+            return false;
+        }
+        
     }
-    return true;
+    return false;
 }
 
+//已注册的app,且app为下线状态才能取消注册
 bool InferenceAPPMap::InferenceMapRemove(inferenceAPP myapp)
 {
     write_lock wlock(read_write_mutex);
-    if (AppMap.count(myapp.inference_name)&& myapp.status ==1)
+    if (AppMap.count(myapp.inference_name))
     {
-        AppMap.erase(myapp.inference_name);
-        return true;
+        if (APPMap[myapp.inference_name].status==3)
+        {
+            bool removesuccess = InferenceMapToDB(myapp);
+            if (removesuccess)
+            {
+                LOG(INFO)<<"app unregister success";
+                AppMap.erase(myapp.inference_name);
+                return true;
+            }
+            else
+            {
+                LOG(ERROR)<<"app unregister failed";
+                return false;
+            }
+            
+        } else 
+        {
+            LOG(ERROR)<<"app is not offline, offline first";
+            return false;
+        }
+        
     }
     else
     {
@@ -156,25 +187,35 @@ bool InferenceAPPMap::InferenceMapUpdate(inferenceAPP myapp)
     write_lock wlock(read_write_mutex);
     if (AppMap.count(myapp.inference_name))
     {
-        if (AppMap[myapp.inference_name] .status != myapp.status)
+        if (AppMap[myapp.inference_name].status != myapp.status)
         {
-            AppMap[myapp.inference_name] .status = myapp.status;
-            cout<<"inferencestatus update"<<endl;
-            return true;
+            bool updatesuccess=InferenceMapToDB(myapp);
+            if(updatesuccess)
+            {
+                AppMap[myapp.inference_name] .status = myapp.status;
+                LOG(INFO)<<"inferencestatus update"<<endl;
+                return true;
+            }
+            else
+            {
+                LOG(ERROR)<<"app update failed";
+                return false;
+            }
         }
         else
         {
-            cout<<"status sample"<<endl;
+            LOG(WARNING)<<"status same"<<endl;
             return false;
         }
     }
     else 
     {
-        cout<<"app not register "<<endl;
+        LOG(ERROR)<<"app not register "<<endl;
         return false;
     }
 }
 
+//TODO 数据库操作细化，考虑app已经注册过情况
 bool InferenceAPPMap::InferenceMapToDB(inferenceAPP myapp)
 {
     string sqlstr;
@@ -194,7 +235,7 @@ bool InferenceAPPMap::InferenceMapToDB(inferenceAPP myapp)
     }
     else if (myapp.status==2 || myapp.status==3)
     {
-        sqlstr = "update  app set status = " + to_string(myapp.status) + "where inference_name =  \""+ myapp.inference_name +"\");";
+        sqlstr = "update app set status = " + to_string(myapp.status) + "where inference_name =  \""+ myapp.inference_name +"\");";
         LOG(INFO)<<sqlstr;
 
     }

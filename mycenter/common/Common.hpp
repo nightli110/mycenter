@@ -40,6 +40,12 @@ enum inferenceoutput
     output_text
 };
 
+struct returnmessage
+{
+    bool success;
+    string failedmessage;
+};
+
 typedef boost::shared_lock<boost::shared_mutex> read_lock;
 typedef boost::unique_lock<boost::shared_mutex> write_lock;
 
