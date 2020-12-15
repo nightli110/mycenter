@@ -25,7 +25,7 @@ inferenceAPP JsonToinferenceAPP(const Json::Value myjson)
     myapp.model_name = myjson["model_name"].asString();
     myapp.register_time = myjson["register_time"].asString();
     myapp.ip = myjson["ip"].asString();
-    myapp.status = 0;
+    myapp.status = myjson["status"].asInt();
     myapp.inference_input = myjson["inference_input"].asString();
     myapp.inference_output = myjson["inference_output"].asString();
     myapp.model_status = myjson["model_status"].asInt();
@@ -189,18 +189,18 @@ bool InferenceAPPMap::InferenceMapUpdate(inferenceAPP myapp)
     {
         if (AppMap[myapp.inference_name].status != myapp.status)
         {
-            bool updatesuccess=InferenceMapToDB(myapp);
-            if(updatesuccess)
-            {
+            // bool updatesuccess=InferenceMapToDB(myapp);
+            // if(updatesuccess)
+            // {
                 AppMap[myapp.inference_name] .status = myapp.status;
                 LOG(INFO)<<"inferencestatus update"<<endl;
                 return true;
-            }
-            else
-            {
-                LOG(ERROR)<<"app update failed";
-                return false;
-            }
+            // }
+            // else
+            // {
+            //     LOG(ERROR)<<"app update failed";
+            //     return false;
+            // }
         }
         else
         {
@@ -235,7 +235,7 @@ bool InferenceAPPMap::InferenceMapToDB(inferenceAPP myapp)
     }
     else if (myapp.status==2 || myapp.status==3)
     {
-        sqlstr = "update app set status = " + to_string(myapp.status) + "where inference_name =  \""+ myapp.inference_name +"\");";
+        sqlstr = "update app set status = " + to_string(myapp.status) + "where inference_name = \""+ myapp.inference_name +"\");";
         LOG(INFO)<<sqlstr;
 
     }
@@ -249,6 +249,7 @@ MYSQL_RES* InferenceAPPMap::InferenceMapfromDB()
 {
     string sqlstr;
     sqlstr = "select * from app order by id;";
+    LOG(INFO)<<"get all app data from DB "<<sqlstr;
     bool fetchsuccess = registerdb->fetch_result(sqlstr);
     if (fetchsuccess)
     {
@@ -264,7 +265,8 @@ MYSQL_RES* InferenceAPPMap::InferenceMapfromDB()
 MYSQL_RES* InferenceAPPMap::InferenceMapfromDB(string inferencename)
 {
     string sqlstr;
-    sqlstr = "selct* from app where inference_name=" +inferencename+";";
+    sqlstr = "select * from app where inference_name=" +inferencename+";";
+    LOG(INFO)<<"get app data from DB: "<<sqlstr;
     bool fetchsuccess = registerdb->fetch_result(sqlstr);
     if (fetchsuccess)
     {
@@ -279,8 +281,7 @@ MYSQL_RES* InferenceAPPMap::InferenceMapfromDB(string inferencename)
 
 void InferenceAPPMap::GetDBALLApp()
 {
-    write_lock wlock(read_write_mutex);
-    MYSQL_RES* mysqldata = InferenceMapfromDB("");
+    MYSQL_RES* mysqldata = InferenceMapfromDB();
     if (mysqldata)
     {
         MysqlResToAppMap(mysqldata);

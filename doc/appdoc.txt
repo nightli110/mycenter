@@ -6,7 +6,7 @@ struct inferenceAPP
     string model_name;       //模型名字
     string register_time;    //注册时间
     string ip;               //ip+port
-    int status;              //状态，0注册成功，1解除注册 数据库中移除，2上线，3下线
+    int status;              //状态，1注册成功，2解除注册 数据库中移除，3上线，4下线
     string inference_input;  //模型输入支持image，text，e.g. {image:1;text:1}
     string inference_output; //模型输出支持image，text，e.g. {image:1;text:1}
     int model_status;        //模型状态，0：V-RAM，1：RAM，2：ROM

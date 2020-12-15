@@ -44,6 +44,7 @@ int main(int argc, char* argv[])
 
     // MyCenter *CeneterView;
     shared_ptr<MyAPPActionView> AppActionView = make_shared<MyAPPActionView>(&mytest);
+    AppActionView->GetAllApp();
     server.resource["^/helloworld"]["GET"]=[](shared_ptr<HttpServer::Response> response, shared_ptr<HttpServer::Request> request){
 
         try

@@ -19,6 +19,13 @@ string MyAPPActionView::AppRegister(string requestjson)
     if (JsonStringToinferenceAPP(requestjson, &myapp))
     {
         Json::Value json;
+        if(myapp.status!=1){
+            json["success"] = false;
+            json["failedmessage"] = myapp.inference_name + "app register post message status error";
+            auto reponsejson =JsonToString(json);
+            return reponsejson;
+        } 
+
         auto suc = appmap->InferenceMapAdd(myapp);
         json["success"] = suc;
         auto reponsejson = JsonToString(json);
@@ -38,14 +45,14 @@ string MyAPPActionView::AppRegister(string requestjson)
 string MyAPPActionView::AppUnRegister(string requestjson)
 {
     inferenceAPP myapp;
-    LOG(INFO) << "unregister";
+    LOG(INFO) << "Try unregister";
     if (JsonStringToinferenceAPP(requestjson, &myapp))
     {
         Json::Value json;
 
-        if(myapp.status!=1){
+        if(myapp.status!=2){
             json["success"] = false;
-            json["failedmessage"] = "app unregister post message status error";
+            json["failedmessage"] = myapp.inference_name +"app unregister post message status error";
             auto reponsejson =JsonToString(json);
             return reponsejson;
         }
@@ -66,17 +73,19 @@ string MyAPPActionView::AppUnRegister(string requestjson)
     }
 }
 
+//TODO 返回用新代消息结构体替代
 string MyAPPActionView::AppOnline(string requestjson)
 {
     inferenceAPP myapp;
-    LOG(INFO)<<"App online";
+    LOG(INFO)<<"Try App online";
     if (JsonStringToinferenceAPP(requestjson, &myapp))
     {
         Json::Value json;
 
-        if(myapp.status!=2){
+        if(myapp.status!=3){
             json["success"] = false;
-            json["failedmessage"] = "app online post message status error";
+            json["failedmessage"] = myapp.inference_name + " app online post message status error";
+            LOG(ERROR)<<myapp.inference_name + " app online post message status error";
             auto reponsejson =JsonToString(json);
             return reponsejson;
         }
@@ -84,6 +93,7 @@ string MyAPPActionView::AppOnline(string requestjson)
         auto suc = appmap->InferenceMapUpdate(myapp);
 
         json["success"] = suc;
+        LOG(INFO)<<"APP "<<myapp.inference_name<<" online success";
         auto reponsejson = JsonToString(json);
         return reponsejson;
     }
@@ -100,14 +110,14 @@ string MyAPPActionView::AppOnline(string requestjson)
 string MyAPPActionView::AppOffLine(string requestjson)
 {
     inferenceAPP myapp;
-    cout << "offline" << endl;
+    LOG(INFO)<< "Try  offline";
     if (JsonStringToinferenceAPP(requestjson, &myapp))
     {
         Json::Value json;
         
-        if(myapp.status!=3){
+        if(myapp.status!=4){
             json["success"] = false;
-            json["failedmessage"] = "app offline post message status error";
+            json["failedmessage"] = myapp.inference_name +"app offline post message status error";
             auto reponsejson =JsonToString(json);
             return reponsejson;
         }
@@ -115,6 +125,7 @@ string MyAPPActionView::AppOffLine(string requestjson)
         auto suc = appmap->InferenceMapUpdate(myapp);
 
         json["success"] = suc;
+        LOG(INFO)<<"APP "<<myapp.inference_name<<" offline success";
         auto reponsejson = JsonToString(json);
         return reponsejson;
     } 
@@ -122,6 +133,7 @@ string MyAPPActionView::AppOffLine(string requestjson)
     {
         Json::Value json;
         json["success"] = "failed";
+        LOG(INFO)<<"APP "<<myapp.inference_name<<" offline failed";
         auto reponsejson = JsonToString(json);
         return reponsejson;
     }
@@ -137,7 +149,10 @@ string MyAPPActionView::GetMap()
         string info = inferenceAPPToJsonString(iter->second);
         response_str = response_str + name + ": " + info + "; ";
     }
-
-    cout << "GetMap" << endl;
     return response_str;
+}
+
+void MyAPPActionView::GetAllApp()
+{
+    appmap->GetDBALLApp();
 }
