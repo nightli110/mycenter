@@ -15,7 +15,7 @@
 #endif
 
 #include "mycenter/App/MyAPPAction.hpp"
-#include "mycenter/center/MyCenter.hpp"
+#include "mycenter/center/BaseCenter.hpp"
 #include "mycenter/common/Common.hpp"
 using namespace std;
 

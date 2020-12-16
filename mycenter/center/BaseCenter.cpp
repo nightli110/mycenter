@@ -1,13 +1,13 @@
 #include <iostream>
-#include "MyCenter.hpp"
+#include "BaseCenter.hpp"
 using namespace std;
 
-MyCenter::MyCenter()
+BaseCenter::BaseCenter()
 {
 
 }
 
-bool MyCenter::ProcessData(Json::Value request_json)
+bool BaseCenter::ProcessData(Json::Value request_json)
 {
 
     //TODO 定时器
@@ -32,23 +32,23 @@ bool MyCenter::ProcessData(Json::Value request_json)
 }
 
 //TODO
-bool MyCenter::PostData(Json::Value request_json)
+bool BaseCenter::PostData(Json::Value request_json)
 {
     return true;
 }
 
- bool MyCenter::CallInferenceOnline(string Inferencename)
+ bool BaseCenter::CallInferenceOnline(string Inferencename)
  {
      return true;
  }
 
-void MyCenter::InitCenter(InferenceAPPMap* MyAppMap)
+void BaseCenter::InitCenter(InferenceAPPMap* MyAppMap)
 {
     CenterAppMap = MyAppMap;
     UpdateAppdata();
 }
 
-void MyCenter::UpdateAppdata()
+void BaseCenter::UpdateAppdata()
 {
     write_lock wlock(read_write_mutex);
     for(auto APP: CenterAppMap->GetInferenceMap())

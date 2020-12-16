@@ -28,13 +28,6 @@ set(DB DB)
 set(SERVER server)
 
 
-#add_subdirectory(App)
-#add_subdirectory(center)
-#add_subdirectory(common)
-#add_subdirectory(datatype)
-#add_subdirectory(DB)
-#add_subdirectory(server)
-
 aux_source_directory(. CenterApp)
 
 include_directories(${PROJECT_BINARY_DIR}/3rdparty)
@@ -49,7 +42,7 @@ add_subdirectory(mycenter)
 
 set(CENTER_LIBS ${CMAKE_DL_LIBS} ${JSON_LIBS} ${SIMPLE_HTTP_LIBS} ${Boost_LIBRARIES} ${Mycenter_LIBS})
 
-set(MODEL_LIBS MyCommon App center datatype DB server)
+set(MODEL_LIBS MyCommon App BaseCenter datatype DB server)
 
 
 add_executable(hello_world_server ${CenterApp})

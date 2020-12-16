@@ -12,13 +12,13 @@
 
 using namespace std;
 
-class MyCenter
+class BaseCenter
 {
 public:
 
-    MyCenter();
+    BaseCenter();
 
-    MyCenter(const MyCenter&);
+    BaseCenter(const BaseCenter&);
     bool ProcessData(Json::Value DataInfoJson);
 
     bool PostData(Json::Value request_json);

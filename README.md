@@ -1,7 +1,7 @@
 # mycenter
 LiuDao 中心控制(天道)模块(开发中)
 欢迎看我的中二项目  
-
+项目开发相关: [LiuDao](http://www.styxhelix.life/categories/liudao/)
 
 主要依赖包：   
 1. boost1.74  
@@ -25,8 +25,28 @@ struct inferenceAPP
     double model_memery;           //模型占有RAM资源 
 };
 ```
-
-## 目前编译方式
+注册json example:
+```
+{
+    "inference_name": "eqwewqeq",
+    "model_name": "sddas",
+    "register_time": "dadsa",
+    "ip": "10.108.1.217:8080",
+    "status": 1,
+    "inference_input": "{image:1}",
+    "inference_output": "{image:1}",
+    "model_status": 1,
+    "model_memery": 0.223
+}
+```
+上线下线json example:  
+```
+{
+    "inference_name": "test"(app name);
+    "status": 3(3 online;4 offline);
+}
+```
+## 编译方式
 ```
 mkdir build
 cd build
@@ -36,5 +56,8 @@ make -j8
 ```
 
 TODO：  
-center 线程逻辑
+center 及相关模块
 心跳探活  
+
+Center Mark:  
+多臂老虎机算法
