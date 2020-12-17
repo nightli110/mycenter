@@ -19,9 +19,22 @@ DataInfo::DataInfo()
     status = 0;
 }
 
+DataInfo::DataInfo(const DataInfo& inputdata)
+{
+    write_lock wlock(DataMutex);
+    InImageLen = inputdata.InImageLen;
+    InImageList = inputdata.InImageList;
+    InTextLen = inputdata.InTextLen;
+    InTextList = inputdata.InTextList;
+    OutImageLen = inputdata.OutImageLen;
+    OutTextLen = inputdata.OutTextLen;
+    status = inputdata.status;
+
+}
+
 bool DataInfo::Imageadd(ImageInfo myimageinfo)
 {
-    write_lock wlock(ImageMutex);
+    write_lock wlock(DataMutex);
     string mykey = myimageinfo.GetImagePath();
     if (!InImageList.count(mykey))
     {
@@ -38,7 +51,7 @@ bool DataInfo::Imageadd(ImageInfo myimageinfo)
 
 bool DataInfo::Textadd(TextInfo mytextinfo)
 {
-    write_lock wlock(TextMutex);
+    write_lock wlock(DataMutex);
     string myid = mytextinfo.GetTextId();
     if (!InTextList.count(myid))
     {
@@ -55,7 +68,7 @@ bool DataInfo::Textadd(TextInfo mytextinfo)
    
 ImageInfo DataInfo::GetImageInfo(string key)
 {
-    read_lock rlock(ImageMutex);
+    read_lock rlock(DataMutex);
     if (InImageList.count(key))
     {
         return InImageList[key];
@@ -69,7 +82,7 @@ ImageInfo DataInfo::GetImageInfo(string key)
 
 TextInfo DataInfo::GetTextInfo(string key)
 {
-    read_lock rlock(TextMutex);
+    read_lock rlock(DataMutex);
     if (InTextList .count(key))
     {
         return InTextList[key];
@@ -82,7 +95,7 @@ TextInfo DataInfo::GetTextInfo(string key)
 
 bool DataInfo::UpdateImageList(string mykey, ImageInfo myimageinfo)
 {
-    write_lock wlock(ImageMutex);
+    write_lock wlock(DataMutex);
     if (InImageList.count(mykey))
     {
         InImageList[mykey] = myimageinfo;
@@ -97,7 +110,7 @@ bool DataInfo::UpdateImageList(string mykey, ImageInfo myimageinfo)
 
 bool DataInfo::UpdateTextList(string mykey, TextInfo mytextinfo)
 {
-    write_lock wlock(TextMutex);
+    write_lock wlock(DataMutex);
     if (InTextList.count(mykey))
     {
         InTextList[mykey] = mytextinfo;
@@ -112,7 +125,7 @@ bool DataInfo::UpdateTextList(string mykey, TextInfo mytextinfo)
 
 bool DataInfo::RemoveImage(string mykey)
 {
-    write_lock wlock(ImageMutex);
+    write_lock wlock(DataMutex);
     if (InImageList.count(mykey))
     {
         InImageList.erase(mykey);
@@ -128,7 +141,7 @@ bool DataInfo::RemoveImage(string mykey)
 
 bool DataInfo::RemoveText(string mykey)
 {
-    write_lock wlock(TextMutex);
+    write_lock wlock(DataMutex);
     if (InImageList.count(mykey))
     {
         InImageList.erase(mykey);
@@ -174,7 +187,7 @@ string DataInfo::GetDataTime()
 
 bool DataInfo::OutImageadd(ImageInfo myimageinfo)
 {
-    write_lock wlock(ImageMutex);
+    write_lock wlock(DataMutex);
     string mykey = myimageinfo.GetImagePath();
     if (!OutImageList.count(mykey))
     {
@@ -191,7 +204,7 @@ bool DataInfo::OutImageadd(ImageInfo myimageinfo)
 
 bool DataInfo::OutTextadd(TextInfo mytextinfo)
 {
-    write_lock wlock(TextMutex);
+    write_lock wlock(DataMutex);
     string myid = mytextinfo.GetTextId();
     if (!OutTextList.count(myid))
     {
@@ -206,3 +219,16 @@ bool DataInfo::OutTextadd(TextInfo mytextinfo)
     }
 }
    
+DataInfo JsonToDataInfo(Json::Value postdata)
+{
+    DataInfo savedata;
+
+    return savedata;
+}
+
+Json::Value OutDataToJson(DataInfo data)
+{
+    Json::Value returnjson;
+
+    return returnjson;
+}

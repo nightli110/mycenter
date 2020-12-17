@@ -16,10 +16,13 @@
 
 using namespace std;
 
+//接受到json 包含需要推理的图像文本信息，此外还包含可能的其他信息如用户cookies之类的
+// DataInfo 将json中和推理相关信息保存
 class DataInfo
 {
 public:
 DataInfo();
+DataInfo(const DataInfo& inputdata);
 
 bool Imageadd(ImageInfo myimageinfo);
 
@@ -61,9 +64,9 @@ void DataGet() ;
 
 void DataProcess();
 private:
-    map<string, ImageInfo>InImageList;
+    map<string, ImageInfo> InImageList;//图片格式数据
     int InImageLen;
-    map<string, TextInfo> InTextList;
+    map<string, TextInfo> InTextList;//文本格式数据
     int InTextLen;
 
     map<string, ImageInfo>OutImageList;
@@ -76,6 +79,8 @@ private:
 
     boost::condition_variable_any CondGet;
     boost::mutex CondMu;
-    boost::shared_mutex ImageMutex;
-    boost::shared_mutex TextMutex;
+    boost::shared_mutex DataMutex;
 };
+
+DataInfo JsonToDataInfo(Json::Value postdata);
+Json::Value OutDataToJson(DataInfo data);

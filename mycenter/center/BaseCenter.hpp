@@ -29,6 +29,8 @@ public:
 
     void UpdateAppdata();
 
+    void RunCenter();
+
 private:
     InferenceAPPMap *CenterAppMap;
 

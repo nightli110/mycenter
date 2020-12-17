@@ -143,6 +143,12 @@ int main(int argc, char* argv[])
         response->write(request->path_match[1].str());
     };
 
+    // server.resource["^/dataabsorb"] = [](shared_ptr<HttpServer::Response>, shared_ptr<HttpServer::Request> request)
+    // {
+
+    // }
+
+
     // server.resource["^/omsdata"]["POST"] = [&CeneterView](shared_ptr<HttpServer::Response>, shared_ptr<HttpServer::Request> request)
     // {
     //     try
