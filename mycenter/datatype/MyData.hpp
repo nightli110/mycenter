@@ -7,8 +7,12 @@
  * @Emile: 1658484908@qq.com
  */
 #include <iostream>
+#include <vector>
 #include <map>
 #include <boost/fiber/condition_variable.hpp>
+#include <boost/algorithm/string/classification.hpp>
+#include <boost/algorithm/string/split.hpp>
+#include <regex>
 
 #include "MyText.hpp"
 #include "MyImage.hpp"
@@ -24,11 +28,11 @@ public:
 DataInfo();
 DataInfo(const DataInfo& inputdata);
 
-bool Imageadd(ImageInfo myimageinfo);
+bool Imageadd(ImageInfo myimageinfo, string imagename);
 
-bool Textadd(TextInfo myimageinfo);
+bool Textadd(TextInfo myimageinfo, string textname);
 
-bool OutImageadd(ImageInfo myimageinfo);
+bool OutImageadd(ImageInfo myimageinfo, string imagename);
 
 bool OutTextadd(TextInfo myimageinfo);
 
@@ -82,5 +86,7 @@ private:
     boost::shared_mutex DataMutex;
 };
 
+
 DataInfo JsonToDataInfo(Json::Value postdata);
 Json::Value OutDataToJson(DataInfo data);
+vector<string> DataTypeSplit(string input);

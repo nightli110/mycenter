@@ -16,18 +16,20 @@ class ImageInfo
 public:
     ImageInfo();
     
-    ImageInfo(string path, int height, int width);
+    ImageInfo(string image, int height, int width);
 
-    void SetImagePath(string path);
+    ImageInfo(string image);
+
+    void SetImagePath(string image);
 
     void SetSize(int height, int width);
 
-    string GetImagePath();
+    string GetImagecode();
 
     pair<int, int> GetSize();
 
 private:
-    string ImagePath;
+    string Imagecode;
     int Height;
     int Width;
 };

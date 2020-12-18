@@ -1,0 +1,9 @@
+消息部分用myapp中的格式
+{
+    "input": "image:1;text:2",
+    "image_1": imagebase64code,
+    "uuid": "dadasdsadas"
+}
+其中uuid 为用户名
+input 为输入数据格式: type:n 表示type格式数据n组 json中必须包含type_m key的数据,其中1<m<=n
+若type为image，image需改为base64编码

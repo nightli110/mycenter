@@ -12,21 +12,27 @@ using namespace std;
 
 ImageInfo::ImageInfo()
 {
-    ImagePath = "";
+    Imagecode = "";
     Height = 0;
     Width = 0;
 }
 
-ImageInfo::ImageInfo(string path, int height, int width)
+ImageInfo::ImageInfo(string image, int height, int width)
 {
-    ImagePath = path;
+    Imagecode = image;
     Height = height;
     Width = width;
+}
+ImageInfo::ImageInfo(string image)
+{
+    Imagecode = image;
+    Height = 0;
+    Width = 0;
 }
 
 void ImageInfo::SetImagePath(string path)
 {
-    ImagePath = path;
+    Imagecode = path;
 }
 
 void ImageInfo::SetSize(int height, int width)
@@ -35,9 +41,9 @@ void ImageInfo::SetSize(int height, int width)
     Width = width;
 }
 
-string ImageInfo::GetImagePath()
+string ImageInfo::GetImagecode()
 {
-    return ImagePath;
+    return Imagecode;
 }
 
 pair<int, int> ImageInfo::GetSize()
