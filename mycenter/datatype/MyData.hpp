@@ -40,6 +40,10 @@ ImageInfo GetImageInfo(string key);
 
 TextInfo GetTextInfo(string key);
 
+ImageInfo GetOutImageInfo(string key);
+
+TextInfo GetOutTextInfo(string key);
+
 bool UpdateImageList(string mykey, ImageInfo myimageinfo);
 
 bool UpdateTextList(string mykey, TextInfo mytextinfo);
@@ -51,6 +55,10 @@ bool RemoveText(string mykey);
 int GetImageLen();
 
 int GetTextLen();
+
+int GetOutImageLen();
+
+int GetOutTextLen()
 
 void SetDataSession(string mysession);
 

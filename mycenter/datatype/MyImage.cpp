@@ -30,9 +30,9 @@ ImageInfo::ImageInfo(string image)
     Width = 0;
 }
 
-void ImageInfo::SetImagePath(string path)
+void ImageInfo::SetImagecode(string image)
 {
-    Imagecode = path;
+    Imagecode = image;
 }
 
 void ImageInfo::SetSize(int height, int width)

@@ -20,7 +20,7 @@ public:
 
     ImageInfo(string image);
 
-    void SetImagePath(string image);
+    void SetImagecode(string image);
 
     void SetSize(int height, int width);
 

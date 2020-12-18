@@ -73,7 +73,7 @@ ImageInfo DataInfo::GetImageInfo(string key)
     }
     else
     {
-        cout << "no key" << endl;
+        LOG(WARNING)<<"GetImageInfo no key ";
         return ImageInfo();
     }
 }
@@ -87,7 +87,37 @@ TextInfo DataInfo::GetTextInfo(string key)
     }
     else
     {
-        cout << "no key" << endl;
+        LOG(WARNING)<<"GetTextInfo no key ";
+        return TextInfo();
+    }
+}
+
+ImageInfo DataInfo::GetOutImageInf(string key)
+{
+    read_lock rlock(DataMutex);
+    if (output_image.count(key))
+    {
+        return output_image[key];
+    }
+    else
+    {
+        LOG(WARNING)<<"GetOutImageInf no key ";
+        return ImageInfo();
+    }
+}
+
+TextInfo DataInfo::GetOutTextInfo(string key)
+{
+
+    read_lock rlock(DataMutex);
+    if (OutTextList.count(key))
+    {
+        return OutTextList[key];
+    }
+    else
+    {
+        LOG(WARNING)<<"GetOutTextInfo no key ";
+        return TextInfo();
     }
 }
 
@@ -101,7 +131,7 @@ bool DataInfo::UpdateImageList(string mykey, ImageInfo myimageinfo)
     }
     else
     {
-        cout << "update faild" << endl;
+        LOG(WARNING)<<"UpdateImageList update faild";
         return false;
     }
 }
@@ -116,7 +146,7 @@ bool DataInfo::UpdateTextList(string mykey, TextInfo mytextinfo)
     }
     else
     {
-        cout << "update faild" << endl;
+        LOG(WARNING)<<"UpdateTextList update faild";
         return false;
     }
 }
@@ -132,7 +162,7 @@ bool DataInfo::RemoveImage(string mykey)
     }
     else
     {
-        cout << "remove faild" << endl;
+        LOG(WARNING)<<"RemoveImage update faild";
         return false;
     }
 }
@@ -148,7 +178,7 @@ bool DataInfo::RemoveText(string mykey)
     }
     else
     {
-        cout << "remove faild" << endl;
+        LOG(WARNING)<<"RemoveText update faild";
         return false;
     }
 }
@@ -232,21 +262,46 @@ DataInfo JsonToDataInfo(Json::Value postdata)
         if (result[0]=="image_")
         {
             ImageInfo tempimage(postdata[i].asString());
-
+            savedata.Imageadd(tempimage, i);
             
         }
         else if (result[0]=="text_")
         {
+            TextInfo temptext(postdata[i].asString());
+            savedata.Textadd(postdata[i], i);
 
         }
 
     }
+
+    savedata.SetDataTime(postdat["time"].asString());
+    savedata.SetSession(postdata["userid"].asString());
+
     return savedata;
 }
 
 Json::Value OutDataToJson(DataInfo data)
 {
     Json::Value returnjson;
+    if (data.GetOutImageLen()>0)
+    {
+        for (int i=1; i<=data.GetOutImageLen(); i++)
+        {
+            string typename = "image_"  + to_string(i);
+            returnjson[typename] = data.GetOutImageInfo(typename);
+        }
+    }
+
+    if (data.GetOutTextLen()>0)
+    {
+        for (int i=1; i<data.GetOutTextLen(); i++)
+        {
+            string typename = "text_" + to_string(i);
+            returnjson[typename] = data.GetOutTextInfo(typename);
+        }
+        
+
+    }
 
     return returnjson;
 }
