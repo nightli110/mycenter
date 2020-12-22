@@ -13,8 +13,9 @@ using namespace std;
 class messagequeue{
 public:
     deque<DataInfo*> datawaitqueue;
-    
-    deque<DataInfo*> datasendqueue;
+
+    //TODO:对于处理失败情况    
+    // deque<DataInfo*> datasendqueue;
 
     messagequeue(int max);
     bool waitpush(DataInfo *data);
@@ -26,18 +27,16 @@ public:
     bool waitempty()
 
     //void finditem(string name)
-    void sendpush(DataInfo *data);
+    // void sendpush(DataInfo *data);
 
-    void waitpop();
+    // void waitpop();
 
-    void waititemdelete();
+    // void waititemdelete();
     
-    bool waitempty()
+    // bool waitempty()
 
 private:
     boost::shared_mutex mtx;
-
-    
 
     int messagequeuelen;
 

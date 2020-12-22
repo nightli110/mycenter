@@ -6,10 +6,11 @@ messagequeue::messagequeue(int maxmessagesnums)
 }
 
 
-void messagequeue::pop()
+void messagequeue::pop(DataInfo &dataitem)
 {
     boost::shared_lock<boost::shared_mutex> lk(mtx);
-    
+    dataitem = dataqueue.begin()
+    dataqueue.pop();
 }
 
 bool messagequeue::push(DataInfo &dataitem)
@@ -42,6 +43,6 @@ bool messagequeue::empty()
     {
         return true;
     }
-    }
+    
 
 }
