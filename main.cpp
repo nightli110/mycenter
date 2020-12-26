@@ -13,7 +13,7 @@
 #ifdef HAVE_OPENSSL
 #include "crypto.hpp"
 #endif
-
+#include <curl/curl.h>
 #include "mycenter/App/MyAPPAction.hpp"
 #include "mycenter/center/BaseCenter.hpp"
 #include "mycenter/common/Common.hpp"

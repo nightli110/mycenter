@@ -58,7 +58,7 @@ int GetTextLen();
 
 int GetOutImageLen();
 
-int GetOutTextLen()
+int GetOutTextLen();
 
 void SetDataSession(string mysession);
 

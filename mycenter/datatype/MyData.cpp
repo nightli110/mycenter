@@ -92,12 +92,12 @@ TextInfo DataInfo::GetTextInfo(string key)
     }
 }
 
-ImageInfo DataInfo::GetOutImageInf(string key)
+ImageInfo DataInfo::GetOutImageInfo(string key)
 {
     read_lock rlock(DataMutex);
-    if (output_image.count(key))
+    if (OutImageList.count(key))
     {
-        return output_image[key];
+        return OutImageList[key];
     }
     else
     {
@@ -268,14 +268,14 @@ DataInfo JsonToDataInfo(Json::Value postdata)
         else if (result[0]=="text_")
         {
             TextInfo temptext(postdata[i].asString());
-            savedata.Textadd(postdata[i], i);
+            savedata.Textadd(temptext, i);
 
         }
 
     }
 
-    savedata.SetDataTime(postdat["time"].asString());
-    savedata.SetSession(postdata["userid"].asString());
+    savedata.SetDataTime(postdata["time"].asString());
+    // savedata.SetSession(postdata["userid"].asString());
 
     return savedata;
 }
@@ -287,8 +287,9 @@ Json::Value OutDataToJson(DataInfo data)
     {
         for (int i=1; i<=data.GetOutImageLen(); i++)
         {
-            string typename = "image_"  + to_string(i);
-            returnjson[typename] = data.GetOutImageInfo(typename);
+            string tempname;
+            tempname= "image_"  + to_string(i);
+            returnjson[tempname] = data.GetOutImageInfo(tempname).GetImagecode();
         }
     }
 
@@ -296,8 +297,8 @@ Json::Value OutDataToJson(DataInfo data)
     {
         for (int i=1; i<data.GetOutTextLen(); i++)
         {
-            string typename = "text_" + to_string(i);
-            returnjson[typename] = data.GetOutTextInfo(typename);
+            string tempname = "text_" + to_string(i);
+            returnjson[tempname] = data.GetOutTextInfo(tempname).GetText();
         }
         
 
