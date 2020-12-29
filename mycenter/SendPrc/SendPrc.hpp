@@ -1,9 +1,10 @@
 #include <iostream>
 #include <string>
 #include <thread>
-#include 
+
 
 #include "threadpool/ThreadPool.h"
+#include "Json/Json.hpp"
 #include "../messagequeue/messagequeue.hpp"
 #include "../datatype/MyData.hpp"
 using namespace std;
@@ -20,10 +21,4 @@ public:
     void addsendtask(DataInfo &data);
 
     void postdata();
-
-
-
-    
-
-    
 }
